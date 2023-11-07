@@ -3,12 +3,16 @@ package com.google.firebase.arczone.firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import android.content.Context;
 import android.widget.Toast;
 
 public class ArcZoneAuth {
     private FirebaseAuth mAuth;
 
+    private Context context;
+
     public ArcZoneAuth() {
+        this.context = context;
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -19,7 +23,7 @@ public class ArcZoneAuth {
             }
             else {
                 // Registration failed
-                //Toast.makeText(context, "Registration failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Registration failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -31,7 +35,7 @@ public class ArcZoneAuth {
             }
             else {
                 // Login failed
-                //Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
