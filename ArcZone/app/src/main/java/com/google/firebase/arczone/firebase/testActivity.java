@@ -26,8 +26,8 @@ public class testActivity extends AppCompatActivity {
 
         // Assuming ArcZoneDatabase is correctly set up to add items to the database
         // You are adding sample items to the database here
-        database.addItem("Sample Item 1", "This is the first sample item.", 4);
-        database.addItem("Sample Item 2", "This is the second sample item.", 3);
+        database.addItem("Sample Item 1", "This is the first sample item.", "woot");
+        database.addItem("Sample Item 2", "This is the second sample item.", "woot");
     }
 
 }

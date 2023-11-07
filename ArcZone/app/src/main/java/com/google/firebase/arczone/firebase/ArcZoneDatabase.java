@@ -10,11 +10,11 @@ public class ArcZoneDatabase {
         databaseReference = FirebaseDatabase.getInstance().getReference("arczoneItems");
     }
 
-    public void addItem(String name, String description, int rating) {
+    public void addItem(String name, String description, String password) {
         // Generate a unique key
         String key = databaseReference.push().getKey();
 
-        ArcZoneItem item = new ArcZoneItem(name, description, rating);
+        ArcZoneUser item = new ArcZoneUser(name, description, password);
 
         databaseReference.child(key).setValue(item);
     }
