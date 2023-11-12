@@ -1,4 +1,4 @@
-package spaceInvaders;
+package com.cpre388.arczone;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -79,6 +79,8 @@ public class SpInView extends SurfaceView implements Runnable {
     }
 
     private void prepareLevel() {
+        Pship = new PlayersShip(context, Xscreen, Yscreen);
+        Pship.update(fps);
     }
 
     public void pause() {
@@ -114,6 +116,7 @@ public class SpInView extends SurfaceView implements Runnable {
             canvas = Holder.lockCanvas();
             canvas.drawColor(Color.argb(255,265,128,182));
             paint.setColor(Color.argb(255,265,128,182));
+            canvas.drawBitmap(Pship.getBitmap(), Pship.getX(), Yscreen-50, paint);
             paint.setColor((Color.argb(255,249,129,0)));
             paint.setTextSize(40);
             canvas.drawText("Score: " + score + " Lives: " + lives, 10,50, paint);

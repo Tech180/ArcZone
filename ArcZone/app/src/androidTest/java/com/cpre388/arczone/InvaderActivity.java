@@ -1,9 +1,9 @@
-package spaceInvaders;
+package com.cpre388.arczone;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-public class InvaderActivity  extends Activity {
+public class InvaderActivity extends Activity {
 
     SpInView SpInView;
 
