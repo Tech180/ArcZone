@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1055400957962",
+    "project_id": "arczone-f8fac",
+    "storage_bucket": "arczone-f8fac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055400957962:android:808f75007a9e29157de7f3",
+        "android_client_info": {
+          "package_name": "com.google.firebase.arczone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIqKDUd-rTiGBj3234_uFnTm9zky-eRCM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

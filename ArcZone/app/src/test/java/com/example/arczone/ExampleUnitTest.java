@@ -1,4 +1,4 @@
-package com.cpre388.arczone;
+package com.example.arczone;
 
 import org.junit.Test;
 

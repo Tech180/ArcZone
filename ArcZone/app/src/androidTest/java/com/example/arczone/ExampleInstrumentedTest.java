@@ -1,4 +1,4 @@
-package com.cpre388.arczone;
+package com.example.arczone;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.cpre388.arczone", appContext.getPackageName());
+        assertEquals("com.example.arczone", appContext.getPackageName());
     }
 }
