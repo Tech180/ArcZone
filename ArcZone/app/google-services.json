@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1055400957962",
+    "firebase_url": "https://arczone-f8fac-default-rtdb.firebaseio.com",
     "project_id": "arczone-f8fac",
     "storage_bucket": "arczone-f8fac.appspot.com"
   },
@@ -9,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1055400957962:android:808f75007a9e29157de7f3",
         "android_client_info": {
-          "package_name": "com.google.firebase.arczone"
+          "package_name": "com.example.arczone"
         }
       },
       "oauth_client": [],
