@@ -31,8 +31,8 @@ public class TitleScreen extends AppCompatActivity {
         Button guest = findViewById(R.id.guest);
         Button login = findViewById(R.id.login);
 
-        EditText email = findViewById(R.id.username);
-        EditText pass = findViewById(R.id.password);
+        EditText email = findViewById(R.id.fragUsername);
+        EditText pass = findViewById(R.id.fragPassword);
 
         //load in gifs to proper ImageViews
         Glide.with(this).load(R.drawable.background).into(background);
@@ -43,6 +43,6 @@ public class TitleScreen extends AppCompatActivity {
         View[] views = {machine, screen, signUp, start, guest, login, email, pass};
 
         //create controller constructor --> sets up onClicks and controls animations
-        TitleScreenController controller = new TitleScreenController(views, this);
+        TitleScreenController controller = new TitleScreenController(views, TitleScreen.this);
     }
 }

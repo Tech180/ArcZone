@@ -13,10 +13,14 @@
         android:theme="@style/Theme.ArcZone"
         tools:targetApi="31">
         <activity
+            android:name=".gameselectionscreen.GameSelectionScreen"
+            android:exported="false" />
+        <activity
             android:name=".titlescreen.TitleScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

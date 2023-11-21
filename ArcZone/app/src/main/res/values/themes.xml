@@ -13,4 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="ArcZone.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/button_border</item>
+        <!-- Add other customizations as needed -->
+    </style>
 </resources>

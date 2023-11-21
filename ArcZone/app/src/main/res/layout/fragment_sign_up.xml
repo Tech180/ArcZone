@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="450dp"
+    android:layout_gravity="center"
+    android:background="@drawable/signupfragwindow"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".universal.SignUpFragment"
+    android:padding="-1dp"
+    android:id="@+id/fragSignUp">
+
+
+    <TextView
+        android:id="@+id/fragTitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_weight=".25"
+        android:fontFamily="@font/arcade"
+        android:text="Account
+        Creation"
+        android:textColor="#FFFFFF"
+        android:textSize="40dp"
+        tools:textAlignment="center"
+        android:gravity="center_horizontal"/>
+
+    <EditText
+        android:id="@+id/fragUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight=".10"
+        android:background="@drawable/textboxborders"
+        android:ems="10"
+        android:hint="username"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:id="@+id/fragEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight=".10"
+        android:background="@drawable/textboxborders"
+        android:ems="10"
+        android:hint="e-mail"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/fragPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight=".10"
+        android:background="@drawable/textboxborders"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/fragConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight=".10"
+        android:background="@drawable/textboxborders"
+        android:ems="10"
+        android:hint="confirm password"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/fragSignUpButton"
+        android:layout_width="200dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight=".10"
+        android:backgroundTint="#200E47"
+        android:fontFamily="@font/arcade"
+        android:text="s i g n  u p"
+        android:textSize="20dp"
+        app:rippleColor="#000000"
+        app:strokeColor="#2394DF"
+        app:strokeWidth="2dp" />
+
+</LinearLayout>

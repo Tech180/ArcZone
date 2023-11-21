@@ -56,6 +56,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.463" />
 
+
+
     <TextView
         android:id="@+id/signUp"
         android:layout_width="wrap_content"
@@ -70,34 +72,34 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background"
-        app:layout_constraintVertical_bias="0.658" />
+        app:layout_constraintVertical_bias="0.648" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/start"
         android:layout_width="158dp"
         android:layout_height="48dp"
         android:layout_marginBottom="92dp"
-        android:background="@drawable/button_border"
-        android:fontFamily="@font/arcade"
+        android:fontFamily="@font/nintendo"
         android:gravity="center"
         android:text="START"
-        android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textColor="@color/teal_200"
+        android:textSize="25dp"
+        android:background="@drawable/button_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/guest"
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:background="@drawable/button_border"
-        android:fontFamily="@font/arcade"
+        android:fontFamily="@font/nintendo"
         android:gravity="center"
         android:text="GUEST LOGIN"
-        android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textColor="@color/teal_200"
+        android:textSize="16dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -106,16 +108,16 @@
         app:layout_constraintTop_toTopOf="@+id/background"
         app:layout_constraintVertical_bias="0.581" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login"
         android:layout_width="220dp"
         android:layout_height="40dp"
         android:background="@drawable/button_border"
-        android:fontFamily="@font/arcade"
+        android:fontFamily="@font/nintendo"
         android:gravity="center"
         android:text="LOGIN"
-        android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textColor="@color/teal_200"
+        android:textSize="16dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +127,7 @@
         app:layout_constraintVertical_bias="0.581" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/fragPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#70F4F4F4"
@@ -143,7 +145,7 @@
         app:layout_constraintVertical_bias="0.483" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/fragUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#70F4F4F4"
