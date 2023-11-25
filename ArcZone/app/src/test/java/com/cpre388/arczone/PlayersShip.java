@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.RectF;
 
+import com.cpre388.arczone.R;
+
 public class PlayersShip {
     RectF rec;
     private Bitmap bit;

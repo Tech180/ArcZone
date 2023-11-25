@@ -13,20 +13,17 @@
         android:theme="@style/Theme.ArcZone"
         tools:targetApi="31">
 
-        <!-- Define your main activity here -->
         <activity
             android:name=".InvaderActivity"
             android:label="@string/app_name"
             android:exported="true">
 
-            <!-- Intent filter to specify this activity as the main launcher activity -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- ... Other activities, services, and components ... -->
     </application>
 
 </manifest>
