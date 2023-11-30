@@ -52,7 +52,7 @@ public class ArcZoneDatabase {
                         if (task.isSuccessful() && !task.getResult().isEmpty()) {
                             DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
-                            arcZoneUser[0] = new ArcZoneUser(
+                            arcZoneUser[0] = ArcZoneUser.getInstance(
                                     doc.getString("username"),
                                     doc.getString("password"),
                                     doc.getString("email"),

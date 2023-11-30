@@ -9,6 +9,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to game descriptions -->
+    <string name="snake_description_part1">Snake is a video game that originated during the late 1970s in arcades becoming something of a classic. </string>
+    <string name="snake_description_part2">The player controls a snake, which roams around, picking up food, trying to avoid hitting its own tail or the edges of the map. </string>
+    <string name="snake_description_part3">Each time the snake eats a piece of food, its tail grows longer, making the game increasingly difficult. </string>
+    <string name="snake_description_part4">The user controls the direction of the snake\'s head (up, down, left, or right), and the snake\'s body follows. </string>
 </resources>

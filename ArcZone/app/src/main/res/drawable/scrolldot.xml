@@ -1,0 +1,10 @@
+<!-- res/drawable/circles.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#CC606060" /> <!-- Light Grey Color -->
+        </shape>
+    </item>
+</layer-list>
+

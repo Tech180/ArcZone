@@ -26,13 +26,6 @@ public class ArcZoneAuth {
     public void registerUser(String email, String password, String username) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                FirebaseUser user = mAuth.getCurrentUser();
-
-                String userId = user.getUid();
-                DatabaseReference usersReference = FirebaseDatabase.getInstance().getReference("users");
-                ArcZoneUser newUser = new ArcZoneUser(username, email, password, null);
-                usersReference.child(userId).setValue(newUser);
-
                 //attempt to add user to database
                 ArcZoneDatabase db = new ArcZoneDatabase();
                 db.addUser(username, email, password);

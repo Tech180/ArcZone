@@ -1,8 +1,7 @@
 package com.example.arczone.titlescreen;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
-import android.icu.text.CaseMap;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.os.Handler;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.arczone.R;
 import com.example.arczone.firebase.*;
 import com.example.arczone.gameselectionscreen.GameSelectionScreen;
@@ -23,15 +24,13 @@ import com.example.arczone.universal.SignUpFragment;
 public class TitleScreenController {
 
     private View[] views;
-    private TitleScreen activity;
-    private Context context;
+    private AppCompatActivity activity;
     private Handler handler = new Handler();
 
     private ArcZoneDatabase db;
-    public TitleScreenController(View[] views, TitleScreen activity){
+    public TitleScreenController(View[] views, AppCompatActivity activity){
         this.views = views;
         this.activity = activity;
-        this.context = activity.getApplicationContext();
 
         //set onClick Listeners for each field (visible and invisible)
         start();
@@ -81,7 +80,7 @@ public class TitleScreenController {
                 fadeOut(views[3], 1000);
 
                 // animate the screen image to appear
-                Animation scale = AnimationUtils.loadAnimation(activity.getApplicationContext(), R.anim.scale_up);
+                Animation scale = AnimationUtils.loadAnimation(activity, R.anim.scale_up);
                 views[1].setVisibility(View.VISIBLE);
                 views[1].startAnimation(scale);
 
@@ -115,19 +114,18 @@ public class TitleScreenController {
                 ArcZoneUser arcZoneUser = db.getUserData(credential);
 
                 //if provided credential is not an email, look up email via username
-                if(!credential.contains("@")){
+                if(!credential.contains("@") && credential != null){
                     credential = arcZoneUser.getEmail();
                 }
 
                 if (ArcZoneAuth.loginUser(credential, pass)) {
-                    Intent intent = new Intent(context, GameSelectionScreen.class);
-                    intent.putExtra("user", arcZoneUser);
+                    Intent intent = new Intent(activity, GameSelectionScreen.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    activity.startActivity(intent);
                 } else {
                     //clear password
                     ((EditText) views[7]).setText("");
-                    Toast.makeText(activity.getApplicationContext(), "Login failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Login failed", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -137,11 +135,10 @@ public class TitleScreenController {
         views[4].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArcZoneUser arcZoneUser = new ArcZoneUser("Guest", null, null, null);
-                Intent intent = new Intent(context, GameSelectionScreen.class);
-                intent.putExtra("user", arcZoneUser);
+                ArcZoneUser arcZoneUser = ArcZoneUser.getInstance("Guest", null, null, null);
+                Intent intent = new Intent(activity, GameSelectionScreen.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                activity.startActivity(intent);
             }
         });
     }
@@ -180,6 +177,6 @@ public class TitleScreenController {
 
     private void showRegisterPopUp(){
         SignUpFragment signup = new SignUpFragment();
-        signup.show(activity.getSupportFragmentManager(), "SignUpFragment");
+        signup.show(((TitleScreen)activity).getSupportFragmentManager(), "SignUpFragment");
     }
 }
