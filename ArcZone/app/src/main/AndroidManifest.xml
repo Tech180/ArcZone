@@ -14,7 +14,7 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".InvaderActivity"
+            android:name="com.cpre388.Invaders.InvActivity"
             android:label="@string/app_name"
             android:exported="true">
 

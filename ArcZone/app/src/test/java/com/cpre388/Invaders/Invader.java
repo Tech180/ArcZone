@@ -1,9 +1,11 @@
-package com.cpre388.arczone;
+package com.cpre388.Invaders;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.RectF;
+
+import com.cpre388.arczone.R;
 
 import java.util.Random;
 
@@ -72,14 +74,14 @@ public class Invader {
         rec.left = x;
         rec.right = x + l;
     }
-    public void dropAndReverse(){
+    public void dropAndReverse(float difficulty){
         if(Move == LEFT){
             Move = RIGHT;
         }else{
             Move = LEFT;
         }
         y = y + h;
-        Speed = Speed * 1.18f;
+        Speed = Speed * 1.18f * difficulty;
     }
     public boolean Aim(float shipX, float shipL){
         int randNum = -1;

@@ -1,4 +1,4 @@
-package com.cpre388.arczone;
+package com.cpre388.Invaders;
 
 import android.graphics.RectF;
 

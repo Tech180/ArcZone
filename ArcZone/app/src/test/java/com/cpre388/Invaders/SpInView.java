@@ -1,4 +1,4 @@
-package com.cpre388.arczone;
+package com.cpre388.Invaders;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -14,9 +14,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.cpre388.arczone.Bullet;
-import com.cpre388.arczone.Invader;
-import com.cpre388.arczone.PlayersShip;
+import com.cpre388.Invaders.Brick;
+import com.cpre388.Invaders.Bullet;
+import com.cpre388.Invaders.Invader;
+import com.cpre388.Invaders.PlayersShip;
 
 import java.io.IOException;
 
@@ -54,13 +55,15 @@ public class SpInView extends SurfaceView implements Runnable {
     private long menaceInterval = 1000;
     private boolean uhOrOh;
     private long lastMenaceTime = System.currentTimeMillis();
-    public SpInView(Context context, int X, int Y){
+    private float difficulty;
+    public SpInView(Context context, int X, int Y, float difficulty){
         super(context);
         this.context = context;
         Holder = getHolder();
         paint = new Paint();
         Xscreen = X;
         Yscreen = Y;
+        this.difficulty = difficulty;
         soundP = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         try{
             AssetManager assetManager = context.getAssets();
@@ -87,7 +90,6 @@ public class SpInView extends SurfaceView implements Runnable {
 
     private void prepareLevel() {
         Pship = new PlayersShip(context, Xscreen, Yscreen);
-        Pship.update(fps);
         B = new Bullet(Yscreen);
         menaceInterval = 1000;
         for(int i = 0; i< invBul.length; i++){
@@ -131,7 +133,7 @@ public class SpInView extends SurfaceView implements Runnable {
         while(play) {
             long strtFrame = System.currentTimeMillis();
             if (!pause) {
-                update();
+                update(difficulty);
             }
             draw();
             timeFrame = System.currentTimeMillis() - strtFrame;
@@ -155,21 +157,9 @@ public class SpInView extends SurfaceView implements Runnable {
     private void draw() {
         if(Holder.getSurface().isValid()){
             canvas = Holder.lockCanvas();
-            canvas.drawColor(Color.argb(255,265,128,182));
-            paint.setColor(Color.argb(255,265,128,182));
-            canvas.drawBitmap(Pship.getBitmap(), Pship.getX(), Yscreen-50, paint);
-            paint.setColor((Color.argb(255,249,129,0)));
-            paint.setTextSize(40);
-            canvas.drawText("Score: " + score + " Lives: " + lives, 10,50, paint);
-            Holder.unlockCanvasAndPost(canvas);
-            if(B.getStatus()){
-                canvas.drawRect(B.getRec(), paint);
-            }
-            for(int i = 0; i < invBul.length; i++){
-                if(invBul[i].getStatus()){
-                    canvas.drawRect(invBul[i].getRec(), paint);
-                }
-            }
+            canvas.drawColor(Color.argb(255,26,128,182));
+            paint.setColor(Color.argb(255,255,255,255));
+            canvas.drawBitmap(Pship.getBitmap(), Pship.getX(), Yscreen-Pship.getH(), paint);
             for(int i = 0; i< numInv; i++){
                 if(inv[i].getVisibility()){
                     if(uhOrOh){
@@ -184,23 +174,25 @@ public class SpInView extends SurfaceView implements Runnable {
                     canvas.drawRect(bricks[i].getRec(), paint);
                 }
             }
+            if(B.getStatus()){
+                canvas.drawRect(B.getRec(), paint);
+            }
+            for(int i = 0; i < invBul.length; i++){
+                if(invBul[i].getStatus()){
+                    canvas.drawRect(invBul[i].getRec(), paint);
+                }
+            }
+            paint.setColor((Color.argb(255,249,129,0)));
+            paint.setTextSize(40);
+            canvas.drawText("Score: " + score + " Lives: " + lives, 10,50, paint);
+            Holder.unlockCanvasAndPost(canvas);
         }
     }
 
-    private void update() {
+    private void update(float difficulty) {
         boolean bump = false;
         boolean lost = false;
-        if(lost){
-            prepareLevel();
-        }
-        if(B.getStatus()){
-            B.update(fps);
-        }
-        for(int i = 0; i < invBul.length; i++){
-            if(invBul[i].getStatus()){
-                invBul[i].update(fps);
-            }
-        }
+        Pship.update(fps, Xscreen);
         for(int i = 0; i < numInv; i++){
             if(inv[i].getVisibility()){
                 inv[i].update(fps);
@@ -217,14 +209,25 @@ public class SpInView extends SurfaceView implements Runnable {
                 }
             }
         }
+        for(int i = 0; i < invBul.length; i++){
+            if(invBul[i].getStatus()){
+                invBul[i].update(fps);
+            }
+        }
         if(bump){
             for(int i = 0; i < numInv; i++){
-                inv[i].dropAndReverse();
+                inv[i].dropAndReverse(difficulty);
                 if(inv[i].getY() > Yscreen - Yscreen/10){
                     lost = true;
                 }
             }
             menaceInterval = menaceInterval - 80;
+        }
+        if(lost){
+            prepareLevel();
+        }
+        if(B.getStatus()){
+            B.update(fps);
         }
         if(B.getImpactPointY()<0){
             B.setInactive();

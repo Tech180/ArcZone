@@ -1,4 +1,4 @@
-package com.cpre388.arczone;
+package com.cpre388.Invaders;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -27,14 +27,14 @@ public class PlayersShip {
         x = sX/2;
         y = sY -20;
         bit = BitmapFactory.decodeResource(context.getResources(), R.drawable.playership);
-        bit = Bitmap.createScaledBitmap(bit, (int)l,(int)h, false);
+        bit = Bitmap.createScaledBitmap(bit, (int)(l),(int)(h), false);
         speed = 350;
     }
-    public void update(long fps){
-        if(shipm == LEFT){
+    public void update(long fps, float xs){
+        if(shipm == LEFT&& x>-25){
             x = x - speed/fps;
         }
-        if(shipm == RIGHT){
+        if(shipm == RIGHT&&x<xs/1.10){
             x = x + speed/fps;
         }
         rec.top = y;
@@ -56,5 +56,8 @@ public class PlayersShip {
     }
     public void setMovementState(int state){
         shipm = state;
+    }
+    public float getH(){
+        return h;
     }
 }
