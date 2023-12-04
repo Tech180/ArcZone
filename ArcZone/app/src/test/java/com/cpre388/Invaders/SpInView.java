@@ -247,8 +247,6 @@ public class SpInView extends SurfaceView implements Runnable {
                         score = score + 10;
                         if(score == numInv*10){
                             pause = true;
-                            score = 0;
-                            lives = 3;
                             prepareLevel();
                         }
                     }
@@ -320,5 +318,9 @@ public class SpInView extends SurfaceView implements Runnable {
                 break;
         }
         return true;
+    }
+
+    public int getScore(){
+        return score;
     }
 }
