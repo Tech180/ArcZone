@@ -35,7 +35,6 @@ public class SpInView extends SurfaceView implements Runnable {
     private int Yscreen;
     private PlayersShip Pship;
     private Bullet B;
-
     private Bullet[] invBul = new Bullet[200];
     private int nextBul;
     private int maxInBul = 10;
@@ -122,7 +121,8 @@ public class SpInView extends SurfaceView implements Runnable {
         }
     }
 
-    public void resume() {
+    public void resume(float diff) {
+        difficulty = diff;
         play = true;
         gThread = new Thread(this);
         gThread.start();

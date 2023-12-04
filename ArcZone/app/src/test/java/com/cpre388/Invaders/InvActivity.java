@@ -21,7 +21,7 @@ public class InvActivity extends Activity {
 
     protected void onResume(){
         super.onResume();
-        SpInView.resume();
+        SpInView.resume(difficulty);
     }
 
     protected void onPause(){
