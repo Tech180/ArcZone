@@ -86,12 +86,12 @@ public class Invader {
     public boolean Aim(float shipX, float shipL){
         int randNum = -1;
         if((shipX + shipL > x && shipX + shipL < x + l) || (shipX > x && shipX < x + l)){
-            randNum = gen.nextInt(150);
+            randNum = gen.nextInt(250);
             if (randNum == 0){
                 return true;
             }
         }
-        randNum = gen.nextInt(2000);
+        randNum = gen.nextInt(5000);
         if(randNum == 0){
             return true;
         }
