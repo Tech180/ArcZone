@@ -157,7 +157,7 @@ public class SpInView extends SurfaceView implements Runnable {
     private void draw() {
         if(Holder.getSurface().isValid()){
             canvas = Holder.lockCanvas();
-            canvas.drawColor(Color.argb(255,26,128,182));
+            canvas.drawColor(Color.argb(255,0,0,160));
             paint.setColor(Color.argb(255,255,255,255));
             canvas.drawBitmap(Pship.getBitmap(), Pship.getX(), Yscreen-Pship.getH(), paint);
             for(int i = 0; i< numInv; i++){
@@ -182,7 +182,7 @@ public class SpInView extends SurfaceView implements Runnable {
                     canvas.drawRect(invBul[i].getRec(), paint);
                 }
             }
-            paint.setColor((Color.argb(255,249,129,0)));
+            paint.setColor((Color.argb(255,255,255,255)));
             paint.setTextSize(40);
             canvas.drawText("Score: " + score + " Lives: " + lives, 10,50, paint);
             Holder.unlockCanvasAndPost(canvas);
@@ -217,7 +217,7 @@ public class SpInView extends SurfaceView implements Runnable {
         if(bump){
             for(int i = 0; i < numInv; i++){
                 inv[i].dropAndReverse(difficulty);
-                if(inv[i].getY() > Yscreen - Yscreen/10){
+                if(inv[i].getY() > Yscreen - Yscreen/Pship.getH()){
                     lost = true;
                 }
             }
