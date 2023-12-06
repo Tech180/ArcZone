@@ -50,6 +50,7 @@ public class SpInView extends SurfaceView implements Runnable {
     private int uh = -1;
     private int oh = -1;
     int score = 0;
+    int gamescore = 0;
     private int lives = 3;
     private long menaceInterval = 1000;
     private boolean uhOrOh;
@@ -247,6 +248,8 @@ public class SpInView extends SurfaceView implements Runnable {
                         score = score + 10;
                         if(score == numInv*10){
                             pause = true;
+                            gamescore = gamescore + score;
+                            score = 0;
                             prepareLevel();
                         }
                     }
@@ -320,7 +323,7 @@ public class SpInView extends SurfaceView implements Runnable {
         return true;
     }
 
-    public int getScore(){
-        return score;
+    public int getFinalScore(){
+        return gamescore;
     }
 }
