@@ -185,7 +185,7 @@ public class SpInView extends SurfaceView implements Runnable {
             }
             paint.setColor((Color.argb(255,255,255,255)));
             paint.setTextSize(40);
-            canvas.drawText("Score: " + score + " Lives: " + lives, 10,50, paint);
+            canvas.drawText("Score: " + gamescore + " Lives: " + lives, 10,50, paint);
             Holder.unlockCanvasAndPost(canvas);
         }
     }
@@ -246,9 +246,9 @@ public class SpInView extends SurfaceView implements Runnable {
                         soundP.play(invaderExp,1,1,0,0,1);
                         B.setInactive();
                         score = score + 10;
+                        gamescore = gamescore + 10;
                         if(score == numInv*10){
                             pause = true;
-                            gamescore = gamescore + score;
                             score = 0;
                             prepareLevel();
                         }
