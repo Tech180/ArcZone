@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ArcZone</string>
+    <string name="music_effects">Music Effects: %d</string>
+    <string name="difficulty">Difficulty: %d</string>
+    <string name="userScore"></string>
+    <string name="opponentScore"></string>
 </resources>
