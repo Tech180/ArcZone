@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.arczone.R;
 import com.example.arczone.games.PongGameView;
@@ -65,7 +66,6 @@ public class PongActivity extends AppCompatActivity {
         });
         // Create and initialize settings overlay with visibility
         settingsOverlay = new SettingsOverlay(true);
-        settingsOverlay.showOverlay();
 
 
         // Assign scores
@@ -109,6 +109,6 @@ public class PongActivity extends AppCompatActivity {
         super.onPause();
         pongGameView.pause();
 
-        settingsOverlay.hideOverlay();
+        //settingsOverlay.hideOverlay();
     }
 }

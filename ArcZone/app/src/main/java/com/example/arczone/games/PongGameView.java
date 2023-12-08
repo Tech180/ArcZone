@@ -28,9 +28,9 @@ import java.util.Random;
 public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 
     private Thread gameThread;
-    private Context context;
-    private Handler handler;
-    private SurfaceHolder surfaceHolder;
+    private final Context context;
+    private final Handler handler;
+    private final SurfaceHolder surfaceHolder;
     private PongActivity pongActivity;
     volatile boolean playing;
     volatile boolean gameStarted = false;
@@ -47,9 +47,6 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
     int scoreOpponent;
     TextView opponentScore;
     private int opponentSpeed;
-
-    private Random random = new Random();
-
 
     /**
      * Constructor for PongGameView.
@@ -84,10 +81,10 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
         super.onSizeChanged(w, h, oldW, oldH);
 
         // Initialize paddle and ball positions after the view size is determined
-        paddleX = w / 2 - paddleWidth / 2;
+        paddleX = (float) w / 2 - (float) paddleWidth / 2;
         paddleY = h - 2 * paddleHeight;
-        ballX = w / 2;
-        ballY = h / 2;
+        ballX = (float) w / 2;
+        ballY = (float) h / 2;
 
         opponentPaddleX = paddleX;
         opponentPaddleY = 0;
@@ -136,8 +133,6 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
 
             // Increment the score when the ball hits the top or bottom edge
             if (ballY - ballRadius < 0) {
-
-
                 scoreUser++;
                 updateScore(userScore, scoreUser, "userScore");
             }
@@ -150,10 +145,10 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
 
 
             // Reset position to the center
-            ballX = getWidth() / 2;
-            ballY = getHeight() / 2;
+            ballX = (float) getWidth() / 2;
+            ballY = (float) getHeight() / 2;
 
-            if (scoreUser >= 10 || scoreOpponent >= 10) {
+            if (scoreOpponent >= 10) {
                 // End the game and go back to the initial start screen
                 playing = false;
                 handler.post(new Runnable() {
@@ -175,14 +170,14 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
             Opponent
         */
 
-        if (opponentPaddleX + opponentPaddleWidth / 2 < ballX) {
+        if (opponentPaddleX + (float) opponentPaddleWidth / 2 < ballX) {
             opponentPaddleX += 3;
         }
         else {
             opponentPaddleX -= 3;
         }
 
-        if (opponentPaddleX + opponentPaddleWidth / 2 < ballX) {
+        if (opponentPaddleX + (float) opponentPaddleWidth / 2 < ballX) {
             opponentPaddleX += calculatePaddleMovement();
         }
         else {
@@ -225,7 +220,7 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
         opponentPaddleWidth = paddleWidth;
         opponentPaddleHeight = paddleHeight;
 
-        difficultyChange(10, 10, 10);
+        difficultyChange(10, 10, 1);
     }
 
     void difficultyChange(int x, int y, int oSpeed) {
@@ -237,10 +232,10 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
 
     public void startGame() {
 
-        paddleX = getWidth() / 2 - paddleWidth / 2;
+        paddleX = (float) getWidth() / 2 - paddleWidth / 2;
         paddleY = getHeight() - 2 * paddleHeight;
-        ballX = getWidth() / 2;
-        ballY = getHeight() / 2;
+        ballX = (float) getWidth() / 2;
+        ballY = (float) getHeight() / 2;
 
         opponentPaddleX = paddleX;
         opponentPaddleY = 0;
@@ -284,13 +279,13 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
 
     private float calculatePaddleMovement() {
         // the ball's position based on its current speed and direction
-        float paddleCenter = opponentPaddleX + opponentPaddleWidth / 2;
+        float paddleCenter = opponentPaddleX + (float) opponentPaddleWidth / 2;
         float timeToReachPaddle = Math.abs(paddleCenter - ballX) / ballSpeedX;
 
         // difference between the predicted ball position and the center of the opponent's
         float predictedBallY = ballY + timeToReachPaddle * ballSpeedY;
 
-        if (predictedBallY < opponentPaddleY + opponentPaddleHeight / 2) {
+        if (predictedBallY < opponentPaddleY + (float) opponentPaddleHeight / 2) {
             return -opponentSpeed;
         }
         else {
@@ -324,7 +319,7 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
         if ((motionEvent.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_MOVE) {
-            paddleX = motionEvent.getX() - paddleWidth / 2;
+            paddleX = motionEvent.getX() - (float) paddleWidth / 2;
         }
         return true;
     }

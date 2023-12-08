@@ -14,21 +14,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.arczone.R;
 
 public class SettingsOverlay extends Fragment {
 
-    private SeekBar difficultySlider;
-    private SeekBar musicEffectsSlider;
-    private ImageView Cog;
-    private ImageView arcadeScreen;
+    ImageView Cog;
 
     public SettingsOverlay() {}
 
     public SettingsOverlay(Boolean toggle) {
+
         if(toggle) {
             //showCog(true);
         }
@@ -37,16 +36,21 @@ public class SettingsOverlay extends Fragment {
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.settings_overlay, container, false);
 
-        difficultySlider = view.findViewById(R.id.difficultyBar);
-        musicEffectsSlider = view.findViewById(R.id.musicEffects);
+        SeekBar difficultySlider = view.findViewById(R.id.difficultyBar);
+        SeekBar musicEffectsSlider = view.findViewById(R.id.musicEffects);
         Button closeButton = view.findViewById(R.id.closeButton);
-        arcadeScreen = view.findViewById(R.id.arcadeScreen);
-        Cog = view.findViewById(R.id.Cog);
+        ImageView arcadeScreen = view.findViewById(R.id.arcadeScreen);
+        this.Cog = view.findViewById(R.id.Cog);
 
         difficultySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -80,7 +84,7 @@ public class SettingsOverlay extends Fragment {
 
         Cog.setOnClickListener(v -> {
             if (!isAdded()) {
-                showOverlay();
+                showOverlay(arcadeScreen);
                 fadeIn(view, 500);
             }
         });
@@ -93,6 +97,39 @@ public class SettingsOverlay extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageView arcadeScreen = view.findViewById(R.id.arcadeScreen);
+        Cog = view.findViewById(R.id.Cog);
+
+        System.out.println("Cog: " + Cog);
+
+        showCog(true);
+    }
+
+    /*
+    public void initialize() {
+
+        // Create an instance of the fragment
+        SettingsOverlay settingsOverlay = new SettingsOverlay();
+
+        // Get the FragmentManager
+        FragmentManager fragmentManager = getParentFragmentManager();
+
+        // Start a new transaction
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Replace existing fragment or add it to the fragment container
+        fragmentTransaction.replace(R.id., settingsOverlay);
+        fragmentTransaction.addToBackStack(null); // Optional: add to back stack
+        fragmentTransaction.commit();
+
+    }
+     */
+
+
     public void showCog(Boolean toggle) {
         if(toggle) {
             Cog.setVisibility(View.VISIBLE);
@@ -104,9 +141,10 @@ public class SettingsOverlay extends Fragment {
 
     }
 
-    public void showOverlay() {
-        System.out.println("arcadeScreen: " + arcadeScreen);
-        //arcadeScreen.setVisibility(View.VISIBLE);
+    public void showOverlay(ImageView arcadeScreen) {
+        Log.e("this", "arcadeScreen: " + arcadeScreen);
+
+        arcadeScreen.setVisibility(View.VISIBLE);
         //difficultySlider.setVisibility(View.VISIBLE);
         //musicEffectsSlider.setVisibility(View.VISIBLE);
 
