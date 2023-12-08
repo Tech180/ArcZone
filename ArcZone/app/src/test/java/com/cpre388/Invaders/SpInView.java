@@ -225,6 +225,7 @@ public class SpInView extends SurfaceView implements Runnable {
             menaceInterval = menaceInterval - 80;
         }
         if(lost){
+            //TODO: remove below and change to gameover(getContext(), "space invaders", gamescore)
             prepareLevel();
         }
         if(B.getStatus()){
@@ -287,6 +288,7 @@ public class SpInView extends SurfaceView implements Runnable {
                     lives--;
                     soundP.play(playerExp,1,1,0,0,1);
                     if(lives==0){
+                        //TODO: remove below and change to gameover(getContext(), "space invaders", gamescore)
                         pause = true;
                         lives = 3;
                         score = 0;
@@ -321,9 +323,5 @@ public class SpInView extends SurfaceView implements Runnable {
                 break;
         }
         return true;
-    }
-
-    public int getFinalScore(){
-        return gamescore;
     }
 }
