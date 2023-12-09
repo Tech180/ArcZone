@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/go_lb"
+    android:layout_gravity="center"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.ArcZone.FullscreenContainer"
+    tools:context=".leaderboard.gameOver">
+
+
+    <TextView
+        android:id="@+id/gameover"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".085"
+        android:fontFamily="@font/nintendo"
+        android:gravity="center"
+        android:text="Game Over"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="75dp" />
+
+    <TextView
+        android:id="@+id/final_score"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.01"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:fontFamily="@font/nintendo"
+        android:text="High Score: "
+        android:textColor="@color/white" />
+    <TextView
+        android:id="@+id/high_score"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.01"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/nintendo"
+        android:text="Final Score: "
+        android:textColor="@color/white" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.01"
+        android:id="@+id/leaderboardButton"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_border"
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/nintendo"
+        android:text="Leaderboard"/>
+
+</LinearLayout>

@@ -1,16 +1,12 @@
 package com.example.arczone.snakegame;
 
-import static com.example.arczone.universal.universal_methods.removeTitleBar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
-import com.example.arczone.R;
+import com.example.arczone.universal.universal_methods;
 
-public class Snake extends AppCompatActivity {
+public class Snake extends universal_methods {
 
     SnakeController snakeController;
 
@@ -30,7 +26,7 @@ public class Snake extends AppCompatActivity {
         //instantiate snakeController
         snakeController = new SnakeController(this, size);
 
-        setContentView(R.layout.activity_snake);
+        setContentView(snakeController);
     }
 
     @Override

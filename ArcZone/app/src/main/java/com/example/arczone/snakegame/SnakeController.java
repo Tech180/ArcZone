@@ -1,9 +1,12 @@
 package com.example.arczone.snakegame;
 
+import static com.example.arczone.universal.universal_methods.gameOver;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.media.AudioManager;
@@ -11,12 +14,10 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.io.IOException;
 import java.util.Random;
 
 public class SnakeController extends SurfaceView implements Runnable {
-
     private Thread thread = null;
     private Context context;
     private SoundPool soundPool;
@@ -31,7 +32,7 @@ public class SnakeController extends SurfaceView implements Runnable {
     private int appX, appY;
     private int blockSize;
 
-    private final int NUM_BLOCKS_WIDE = 40;
+    private final int NUM_BLOCKS_WIDE = 20;
     private int numBlocksHigh;
 
     private long nextFrameTime;
@@ -44,6 +45,7 @@ public class SnakeController extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
     private Paint paint;
+    private boolean isPostGameOverTap = false;
 
     public SnakeController(Context context, Point size){
         super(context);
@@ -55,7 +57,6 @@ public class SnakeController extends SurfaceView implements Runnable {
 
         blockSize = screenX / NUM_BLOCKS_WIDE;
         numBlocksHigh = screenY / blockSize;
-
 
         soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         try{
@@ -165,7 +166,7 @@ public class SnakeController extends SurfaceView implements Runnable {
 
         //hit self
         for(int i = snakeLength - 1; i > 0; i--){
-            if((i > 4) && (snakeXs[0] == snakeXs[i]) && (snakeYs[0] == snakeYs[i])) dead = true;
+            if(snakeXs[0] == snakeXs[i] && snakeYs[0] == snakeYs[i]) dead = true;
         }
 
         return dead;
@@ -179,7 +180,7 @@ public class SnakeController extends SurfaceView implements Runnable {
         if(death()){
             soundPool.play(death, 1, 1, 0, 0, 1);
 
-            //TODO: display game over until tap, then move to leaderboard activity
+            gameOver(context, "Snake", score);
         }
     }
 
@@ -188,9 +189,9 @@ public class SnakeController extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
 
             //make the screen black
-            canvas.drawColor(0x000000);
+            canvas.drawColor(Color.argb(255, 0, 0, 0));
             //make the snake green
-            paint.setColor(0x33CC33);
+            paint.setColor(Color.argb(255, 51, 204, 51));
 
             //scale the HUD
             paint.setTextSize(90);
@@ -206,7 +207,7 @@ public class SnakeController extends SurfaceView implements Runnable {
             }
 
             //make the apple red
-            paint.setColor(0xCC0000);
+            paint.setColor(Color.argb(255, 204, 0, 0));
 
             //draw apple
             canvas.drawRect(appX *  blockSize,
@@ -226,7 +227,7 @@ public class SnakeController extends SurfaceView implements Runnable {
             // Tenth of a second has passed
 
             // Setup when the next update will be triggered
-            nextFrameTime =System.currentTimeMillis() + MILLIS_PER_SEC / FPS;
+            nextFrameTime = System.currentTimeMillis() + MILLIS_PER_SEC / FPS;
 
             // Return true so that the update and draw
             // functions are executed
@@ -238,11 +239,10 @@ public class SnakeController extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 if (motionEvent.getX() >= screenX / 2) {
-                    switch(heading){
+                    switch (heading) {
                         case UP:
                             heading = Heading.RIGHT;
                             break;
@@ -257,7 +257,7 @@ public class SnakeController extends SurfaceView implements Runnable {
                             break;
                     }
                 } else {
-                    switch(heading){
+                    switch (heading) {
                         case UP:
                             heading = Heading.LEFT;
                             break;

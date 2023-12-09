@@ -1,17 +1,14 @@
 package com.example.arczone.titlescreen;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
 import com.bumptech.glide.Glide;
 import com.example.arczone.R;
-
-import static com.example.arczone.universal.universal_methods.*;
-public class TitleScreen extends AppCompatActivity {
+import com.example.arczone.universal.universal_methods;
+public class TitleScreen extends universal_methods {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +25,7 @@ public class TitleScreen extends AppCompatActivity {
         ImageView screen = findViewById(R.id.screen);
 
         TextView signUp = findViewById(R.id.signUp);
+        TextView title = findViewById(R.id.title);
 
         Button start = findViewById(R.id.start);
         Button guest = findViewById(R.id.guest);
@@ -41,8 +39,8 @@ public class TitleScreen extends AppCompatActivity {
         Glide.with(this).load(R.drawable.machine).into(machine);
 
         //create new views array for Controller constructor
-        // 0:machine, 1:Screen, 2:signUp, 3:start, 4:guest, 5:login, 6:user, 7:pass
-        View[] views = {machine, screen, signUp, start, guest, login, email, pass};
+        // 0:machine, 1:Screen, 2:signUp, 3:start, 4:guest, 5:login, 6:user, 7:pass, 8: title
+        View[] views = {machine, screen, signUp, start, guest, login, email, pass, title};
 
         //create controller constructor --> sets up onClicks and controls animations
         TitleScreenController controller = new TitleScreenController(views, TitleScreen.this);

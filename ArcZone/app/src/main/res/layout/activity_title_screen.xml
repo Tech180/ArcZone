@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/machine"
-        android:layout_width="519dp"
-        android:layout_height="586dp"
+        android:layout_width="495dp"
+        android:layout_height="565dp"
         android:src="@drawable/machine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/screen"
         android:layout_width="wrap_content"
@@ -54,9 +55,43 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.536" />
 
+    <EditText
+        android:id="@+id/fragUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#70F4F4F4"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        app:layout_constraintVertical_bias="0.443" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/login"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/nintendo"
+        android:gravity="center"
+        android:text="LOGIN"
+        android:textColor="@color/teal_200"
+        android:textSize="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.625" />
 
     <TextView
         android:id="@+id/signUp"
@@ -72,7 +107,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background"
-        app:layout_constraintVertical_bias="0.648" />
+        app:layout_constraintVertical_bias="0.694" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/start"
@@ -106,25 +141,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/background"
-        app:layout_constraintVertical_bias="0.581" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login"
-        android:layout_width="220dp"
-        android:layout_height="40dp"
-        android:background="@drawable/button_border"
-        android:fontFamily="@font/nintendo"
-        android:gravity="center"
-        android:text="LOGIN"
-        android:textColor="@color/teal_200"
-        android:textSize="16dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.625" />
 
     <EditText
         android:id="@+id/fragPassword"
@@ -142,24 +159,6 @@
         app:layout_constraintEnd_toEndOf="@+id/background"
         app:layout_constraintStart_toStartOf="@+id/background"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.483" />
-
-    <EditText
-        android:id="@+id/fragUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#70F4F4F4"
-        android:ems="10"
-        android:hint="Username"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/background"
-        app:layout_constraintTop_toTopOf="@+id/background"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintVertical_bias="0.533" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

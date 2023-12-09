@@ -1,20 +1,17 @@
 package com.example.arczone.gameselectionscreen;
 
-import static com.example.arczone.universal.universal_methods.removeTitleBar;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.arczone.R;
 import com.example.arczone.firebase.ArcZoneUser;
 import com.example.arczone.gameselectionscreen.GSSController.*;
+import com.example.arczone.universal.universal_methods;
 
-public class GameSelectionScreen extends AppCompatActivity {
+public class GameSelectionScreen extends universal_methods {
 
     private ViewPager2 viewPager;
     private CarouselPagerAdapter carouselPagerAdapter;

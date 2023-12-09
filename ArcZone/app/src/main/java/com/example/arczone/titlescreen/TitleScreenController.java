@@ -1,6 +1,5 @@
 package com.example.arczone.titlescreen;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,9 +18,10 @@ import com.example.arczone.R;
 import com.example.arczone.firebase.*;
 import com.example.arczone.gameselectionscreen.GameSelectionScreen;
 import com.example.arczone.universal.SignUpFragment;
+import com.example.arczone.universal.universal_methods;
 
 
-public class TitleScreenController {
+public class TitleScreenController extends universal_methods {
 
     private View[] views;
     private AppCompatActivity activity;
@@ -34,6 +34,9 @@ public class TitleScreenController {
 
         //set onClick Listeners for each field (visible and invisible)
         start();
+
+        flashAnimation(views[3]);
+
         login();
         guest();
         signUp();
@@ -45,111 +48,75 @@ public class TitleScreenController {
     }
 
     /**
-     * Used to fade in views
-     * @param view view to be faded in
-     * @param dur duration of fade in
-     */
-    private void fadeIn(View view, int dur){
-        view.setVisibility(View.VISIBLE);
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(dur);
-    }
-
-    /**
-     * Used to fade out views
-     * @param view view to be faded out
-     * @param dur duration of fade out
-     */
-    private void fadeOut(View view, int dur){
-        Animation fadeOut = new AlphaAnimation(1, 0);
-        fadeOut.setDuration(dur);
-        view.setVisibility(View.INVISIBLE);
-    }
-
-    /**
      * Sets up the onClick for the start button
      * This fades out the start button, brings up the screen image,
      * fades in the user EditText, pass EditText, Guest button,
      * and sign up Text button
      */
     private void start(){
-        views[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // fade out start button
-                fadeOut(views[3], 1000);
+        views[3].setOnClickListener(v -> {
+            // fade out start button
+            fadeOut(views[3], 1000);
 
-                // animate the screen image to appear
-                Animation scale = AnimationUtils.loadAnimation(activity, R.anim.scale_up);
-                views[1].setVisibility(View.VISIBLE);
-                views[1].startAnimation(scale);
+            // animate the screen image to appear
+            Animation scale = AnimationUtils.loadAnimation(activity, R.anim.scale_up);
+            views[1].setVisibility(View.VISIBLE);
+            views[1].startAnimation(scale);
 
-                //hide the start button
-                fadeOut(views[3], 500);
+            //hide the start button
+            fadeOut(views[3], 500);
 
-                // delay the fade in of the user, pass, guest, and signup views
-                // until the screen image animation has finished + 100 ms
-                handler.postDelayed(() -> {
-                    // fade in user edit text
-                    fadeIn(views[6], 1000);
-                    // fade in pass edit text
-                    fadeIn(views[7], 1000);
-                    // fade in the guest sign in button
-                    fadeIn(views[4], 1000);
-                    // fade in the sign up text
-                    fadeIn(views[2], 1000);
-                }, 1100);
-            }
+            // delay the fade in of the user, pass, guest, and signup views
+            // until the screen image animation has finished + 100 ms
+            handler.postDelayed(() -> {
+                // fade in user edit text
+                fadeIn(views[6], 1000);
+                // fade in pass edit text
+                fadeIn(views[7], 1000);
+                // fade in the guest sign in button
+                fadeIn(views[4], 1000);
+                // fade in the sign up text
+                fadeIn(views[2], 1000);
+            }, 1100);
         });
     }
 
     private void login(){
-        views[5].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String credential = ((EditText)views[6]).getText().toString();
-                String pass = ((EditText)views[7]).getText().toString();
+        views[5].setOnClickListener(v -> {
+            String credential = ((EditText)views[6]).getText().toString();
+            String pass = ((EditText)views[7]).getText().toString();
 
-                //get the user data from the db via the credential
-                ArcZoneUser arcZoneUser = db.getUserData(credential);
+            //get the user data from the db via the credential
+            ArcZoneUser arcZoneUser = db.getUserData(credential);
 
-                //if provided credential is not an email, look up email via username
-                if(!credential.contains("@") && credential != null){
-                    credential = arcZoneUser.getEmail();
-                }
+            //if provided credential is not an email, look up email via username
+            if(!credential.contains("@") && credential != null){
+                credential = arcZoneUser.getEmail();
+            }
 
-                if (ArcZoneAuth.loginUser(credential, pass)) {
-                    Intent intent = new Intent(activity, GameSelectionScreen.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    activity.startActivity(intent);
-                } else {
-                    //clear password
-                    ((EditText) views[7]).setText("");
-                    Toast.makeText(activity, "Login failed", Toast.LENGTH_LONG).show();
-                }
+            if (ArcZoneAuth.loginUser(credential, pass)) {
+                Intent intent = new Intent(activity, GameSelectionScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
+            } else {
+                //clear password
+                ((EditText) views[7]).setText("");
+                Toast.makeText(activity, "Login failed", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void guest(){
-        views[4].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArcZoneUser arcZoneUser = ArcZoneUser.getInstance("Guest", null, null, null);
-                Intent intent = new Intent(activity, GameSelectionScreen.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.startActivity(intent);
-            }
+        views[4].setOnClickListener(v -> {
+            ArcZoneUser arcZoneUser = ArcZoneUser.getInstance("Guest", null, null, null);
+            Intent intent = new Intent(activity, GameSelectionScreen.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
         });
     }
 
     private void signUp(){
-        views[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRegisterPopUp();
-            }
-        });
+        views[2].setOnClickListener(v -> showRegisterPopUp());
     }
 
     private void buttonSwapOnInput(){
