@@ -1,5 +1,6 @@
 package com.example.arczone.pong;
 
+import static com.example.arczone.universal.universal_methods.gameOver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -20,11 +21,12 @@ public class PongActivity extends AppCompatActivity {
     private TextView scoreUser, scoreOpponent;
 
     //private SettingsOverlay settingsOverlay;
-    private TextView gameOver;
+    //private TextView gameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         // Set full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -42,10 +44,8 @@ public class PongActivity extends AppCompatActivity {
         scoreUser = findViewById(R.id.scoreUser);
         scoreOpponent = findViewById(R.id.scoreOpponent);
 
-
         // Initialize start button and game over
         startButton = findViewById(R.id.startButton);
-        gameOver = findViewById(R.id.gameOver);
 
         scoreOpponent = findViewById(R.id.scoreOpponent);
         scoreUser = findViewById(R.id.scoreUser);
@@ -75,20 +75,24 @@ public class PongActivity extends AppCompatActivity {
      * Method called when the game is over.
      * Displays the game over message and restart button after a delay.
      */
-    public void gameOver() {
+    public void gameOverPong() {
 
         pongGameView.playing = false;
 
-        startButton = findViewById(R.id.startButton);
+        Integer score = pongGameView.scoreUser;
 
-        gameOver.setVisibility(View.VISIBLE);
+        pongGameView.scoreUser = 0;
+        pongGameView.scoreOpponent = 0;
+
+        //startButton = findViewById(R.id.startButton);
+
+        //gameOver.setVisibility(View.VISIBLE);
 
         // Hide the game over TextView after three seconds
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                gameOver.setVisibility(View.INVISIBLE);
-                startButton.setVisibility(View.VISIBLE);
+                gameOver(pongGameView.context, "Snake", score);
             }
         }, 3000); // 3000 milliseconds = 3 seconds
     }
@@ -103,7 +107,5 @@ public class PongActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         pongGameView.pause();
-
-        //settingsOverlay.hideOverlay();
     }
 }

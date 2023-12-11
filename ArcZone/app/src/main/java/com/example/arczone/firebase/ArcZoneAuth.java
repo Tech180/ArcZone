@@ -15,7 +15,7 @@ public class ArcZoneAuth {
     private static FirebaseDatabase db;
     private static FirebaseUser user = null;
     private static boolean success = false;
-    private static Context context;
+    private Context context;
 
     public ArcZoneAuth(Context context) {
         this.context = context;
@@ -52,7 +52,7 @@ public class ArcZoneAuth {
             }
             else {
                 // Login failed
-                Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
                 success = false;
             }
         });

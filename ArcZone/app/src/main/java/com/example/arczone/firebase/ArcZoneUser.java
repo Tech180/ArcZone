@@ -6,10 +6,10 @@ public class ArcZoneUser {
 
     private static ArcZoneUser instance;
 
-    private String user;
-    private String pass;
-    private String email;
-    private Map<String, Integer> scores;
+    private final String user;
+    private final String pass;
+    private final String email;
+    private final Map<String, Integer> scores;
 
     // Private constructor to prevent instantiation
     private ArcZoneUser(String user, String pass, String email, Map<String, Integer> scores) {

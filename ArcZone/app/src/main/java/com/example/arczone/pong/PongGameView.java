@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
 
     private Thread gameThread;
-    private final Context context;
+    final Context context;
     private final Handler handler;
     private final SurfaceHolder surfaceHolder;
     private PongActivity pongActivity;
@@ -144,7 +144,7 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        pongActivity.gameOver();
+                        pongActivity.gameOverPong();
                     }
                 });
                 return;
