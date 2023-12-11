@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#000000"
-    tools:context=".games.PongActivity">
+    tools:context=".pong.PongActivity">
 
-    <com.example.arczone.games.PongGameView
+    <com.example.arczone.pong.PongGameView
         android:id="@+id/pongGameView"
         android:layout_width="0dp"
         android:layout_height="0dp"

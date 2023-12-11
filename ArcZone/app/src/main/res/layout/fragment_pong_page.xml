@@ -34,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_weight=".25"
         android:layout_marginHorizontal="15dp"
-        android:src="@drawable/snake"
+        android:src="@drawable/pong"
         android:layout_marginBottom="15dp"
         />
 
@@ -60,7 +60,7 @@
     </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/play"
         android:layout_width="150dp"
         android:layout_height="0dp"
         android:layout_weight=".035"

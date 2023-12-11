@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.arczone.R;
-import com.example.arczone.universal.SettingsOverlay;
 
 public class PongActivity extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class PongActivity extends AppCompatActivity {
     private static Button startButton;
     private TextView scoreUser, scoreOpponent;
 
-    private SettingsOverlay settingsOverlay;
+    //private SettingsOverlay settingsOverlay;
     private TextView gameOver;
 
     @Override
@@ -61,7 +60,7 @@ public class PongActivity extends AppCompatActivity {
             }
         });
         // Create and initialize settings overlay with visibility
-        settingsOverlay = new SettingsOverlay(true);
+        //settingsOverlay = new SettingsOverlay(true);
 
 
         // Assign scores
