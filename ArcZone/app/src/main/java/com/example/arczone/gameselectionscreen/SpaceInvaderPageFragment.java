@@ -1,14 +1,18 @@
 package com.example.arczone.gameselectionscreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.arczone.R;
+import com.example.arczone.snakegame.Snake;
+import com.example.arczone.spaceinvaders.InvActivity;
 
 public class SpaceInvaderPageFragment extends Fragment {
 
@@ -33,6 +37,18 @@ public class SpaceInvaderPageFragment extends Fragment {
         gameDescription.setText(
                 "placeholder text"
         );
+
+        Button play = root.findViewById(R.id.play);
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //start snake game
+                Intent intent = new Intent(getActivity(), InvActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().startActivity(intent);
+            }
+        });
 
         return root;
     }
