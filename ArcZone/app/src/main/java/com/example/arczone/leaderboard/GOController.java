@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.arczone.R;
 import com.example.arczone.firebase.ArcZoneDatabase;
 import com.example.arczone.firebase.ArcZoneUser;
-import com.example.arczone.titlescreen.TitleScreen;
-import com.example.arczone.universal.SignUpFragment;
 import com.example.arczone.universal.universal_methods;
 
 import java.util.HashMap;
@@ -24,11 +22,13 @@ public class GOController extends universal_methods {
     private ArcZoneDatabase db;
     private String game;
     private Integer score;
+    private Map<String, Integer>[] scores;
 
     private TextView highscore;
     private TextView finalscore;
     private TextView gameover;
     private Button leaderButton;
+    private int mode = -1;
     public GOController(AppCompatActivity activity, String game, Integer score){
         this.activity = activity;
         this.game = game;
@@ -46,13 +46,19 @@ public class GOController extends universal_methods {
         flashAnimation(gameover);
         flashAnimation(leaderButton);
 
+        if(game == "Pong") mode = 0;
+        else if(game == "Snake") mode = 1;
+        else mode = 2;
+
+        scores = user.getScores();
+
         //if user is not guest, set the high score and update it in the DB if its higher
         if(user.getUsername() != "Guest") {
             highscore.setText("High Score: " +
-                    user.getScores().get(game));
+                    scores[mode].get(game));
 
             //if new score is higher than stored high score
-            if(user.getScores().get(game) < this.score) {
+            if(scores[mode].get(game) < this.score) {
                 //put score into map object
                 Map<String, Integer> newScore = new HashMap<>();
                 newScore.put(game, this.score);

@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -32,12 +34,27 @@ public class ArcZoneDatabase {
     private CollectionReference users;
     private CollectionReference scores;
     private boolean success = false;
+    private String email = null;
 
     //initialize
     public ArcZoneDatabase() {
         db = FirebaseFirestore.getInstance();
         users = db.collection("users");
         scores = db.collection("scores");
+    }
+
+    public String getUserEmailFromUsername(String identifier){
+        users
+                .whereEqualTo("username",  identifier)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot doc = task.getResult().getDocuments().get(0);
+
+                        email = doc.getString("email");
+                    }
+                });
+        return email;
     }
 
     /**
@@ -59,19 +76,16 @@ public class ArcZoneDatabase {
         users
                 .whereEqualTo(mode,  identifier)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                            DocumentSnapshot doc = task.getResult().getDocuments().get(0);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
-                            arcZoneUser[0] = ArcZoneUser.getInstance(
-                                    doc.getString("username"),
-                                    doc.getString("password"),
-                                    doc.getString("email"),
-                                    (Map<String, Integer>) doc.get("scores")
-                            );
-                        }
+                        arcZoneUser[0] = ArcZoneUser.getInstance(
+                                doc.getString("username"),
+                                doc.getString("password"),
+                                doc.getString("email"),
+                                ((ArrayList<Map<String, Integer>>) doc.get("scores")).toArray(new Map[3])
+                        );
                     }
                 });
         return arcZoneUser[0];
@@ -95,22 +109,8 @@ public class ArcZoneDatabase {
                     DocumentSnapshot document = task.getResult();
 
                     if (document.exists()) {
-                        // Document exists
-                        Map<String, Object> data = document.getData();
-
-                        // Assuming the array of Map<Integer, String> is stored under a key like "scores"
-                        Object[] rawScores = (Object[]) data.get("scores");
-
-                        // Determine the array size based on the actual size of the "scores" array
-                        int arraySize = Math.min(10, rawScores.length);
-
-                        // Create an array with the determined size
-                        Map<Integer, String>[] leaderboard = new Map[arraySize];
-
-                        // Convert the raw scores to the desired type
-                        for (int i = 0; i < arraySize; i++) {
-                            leaderboard[i] = (Map<Integer, String>) rawScores[i];
-                        }
+                        //get the array list from the database, convert to an array of size 10 (# of positions on board)
+                        Map<Integer, String>[] leaderboard = ((ArrayList<Map<String, Integer>>) document.get("scores")).toArray(new Map[10]);
                     } else {
                         // Document does not exist
                         System.out.println("Document not found!");
@@ -167,9 +167,10 @@ public class ArcZoneDatabase {
     public void updateLeaderboard(Map<Integer, String>[] arr, String game){
         DocumentReference docRef = scores.document(game);
 
-        docRef.set(arr);
+        docRef.set(Arrays.asList(arr));
     }
 
+    //TODO: This needs to be verified.
     public void updateUserScore(Map<String, Integer> score, ArcZoneUser user){
         users.whereEqualTo("username", user.getUsername())
                 .get()

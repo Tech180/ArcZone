@@ -9,10 +9,10 @@ public class ArcZoneUser {
     private final String user;
     private final String pass;
     private final String email;
-    private final Map<String, Integer> scores;
+    private final Map<String, Integer>[] scores;
 
     // Private constructor to prevent instantiation
-    private ArcZoneUser(String user, String pass, String email, Map<String, Integer> scores) {
+    private ArcZoneUser(String user, String pass, String email, Map<String, Integer>[] scores) {
         this.user = user;
         this.pass = pass;
         this.email = email;
@@ -20,7 +20,7 @@ public class ArcZoneUser {
     }
 
     // Method to get the singleton instance
-    public static synchronized ArcZoneUser getInstance(String user, String pass, String email, Map<String, Integer> scores) {
+    public static synchronized ArcZoneUser getInstance(String user, String pass, String email, Map<String, Integer>[] scores) {
         if (instance == null) {
             instance = new ArcZoneUser(user, pass, email, scores);
         }
@@ -44,7 +44,7 @@ public class ArcZoneUser {
         return this.user;
     }
 
-    public Map<String, Integer> getScores(){
+    public Map<String, Integer>[] getScores(){
         return this.scores;
     }
 

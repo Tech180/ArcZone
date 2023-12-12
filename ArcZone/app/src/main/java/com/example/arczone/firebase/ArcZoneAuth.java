@@ -45,7 +45,7 @@ public class ArcZoneAuth {
         });
     }
 
-    public static boolean loginUser(String email, String password) {
+    public boolean loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 success = true;
