@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.arczone.R;
 
-public class SettingsOverlay extends Fragment {
+public class SettingsOverlay extends Fragment{
 
     ImageView Cog;
 

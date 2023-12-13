@@ -34,7 +34,7 @@ public class ArcZoneDatabase {
     private CollectionReference users;
     private CollectionReference scores;
     private boolean success = false;
-    private String email = null;
+    private String email = "WAIT";
 
     //initialize
     public ArcZoneDatabase() {
@@ -43,44 +43,20 @@ public class ArcZoneDatabase {
         scores = db.collection("scores");
     }
 
-    public String getUserEmailFromUsername(String identifier){
-        users
-                .whereEqualTo("username",  identifier)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                        DocumentSnapshot doc = task.getResult().getDocuments().get(0);
-
-                        email = doc.getString("email");
-                    }
-                });
-        return email;
-    }
-
     /**
      * Get user data from the database by either username or email
      * @param identifier user provided credential
      * @return
      */
-    public ArcZoneUser getUserData(String identifier){
-
-        String mode;
-
-        //if identifier contains @, its an email, look up by email field
-        if(identifier.contains("@")) mode = "email";
-        //else if no @, its a username, look up by username
-        else mode = "username";
-
-        final ArcZoneUser[] arcZoneUser = {null};
-
+    public void getUserData(String identifier){
         users
-                .whereEqualTo(mode,  identifier)
+                .whereEqualTo("email",  identifier)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && !task.getResult().isEmpty()) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
-                        arcZoneUser[0] = ArcZoneUser.getInstance(
+                        ArcZoneUser.getInstance(
                                 doc.getString("username"),
                                 doc.getString("password"),
                                 doc.getString("email"),
@@ -88,7 +64,6 @@ public class ArcZoneDatabase {
                         );
                     }
                 });
-        return arcZoneUser[0];
     }
 
     public Map<Integer, String>[] getLeaderboard(String identifier){
@@ -99,7 +74,7 @@ public class ArcZoneDatabase {
         DocumentReference docRef = scores.document(identifier);
 
         //initialize the array to make the compiler happy
-        Map<Integer, String>[] leaderboard = null;
+        final Map<Integer, String>[][] leaderboard = new Map[][]{null};
 
         // Get the document snapshot using asynchronous callback
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -110,7 +85,7 @@ public class ArcZoneDatabase {
 
                     if (document.exists()) {
                         //get the array list from the database, convert to an array of size 10 (# of positions on board)
-                        Map<Integer, String>[] leaderboard = ((ArrayList<Map<String, Integer>>) document.get("scores")).toArray(new Map[10]);
+                        leaderboard[0] = ((ArrayList<Map<String, Integer>>) document.get("scores")).toArray(new Map[10]);
                     } else {
                         // Document does not exist
                         System.out.println("Document not found!");
@@ -131,7 +106,7 @@ public class ArcZoneDatabase {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return leaderboard;
+        return leaderboard[0];
     }
 
     public boolean addUser(String user, String email, String password) {

@@ -46,8 +46,8 @@ public class GOController extends universal_methods {
         flashAnimation(gameover);
         flashAnimation(leaderButton);
 
-        if(game == "Pong") mode = 0;
-        else if(game == "Snake") mode = 1;
+        if(game.equals("Pong")) mode = 0;
+        else if(game.equals("Snake")) mode = 1;
         else mode = 2;
 
         scores = user.getScores();

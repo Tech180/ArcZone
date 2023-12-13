@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.arczone.R;
 import com.example.arczone.firebase.*;
 import com.example.arczone.gameselectionscreen.GameSelectionScreen;
+import com.example.arczone.universal.LoadingDialogFragment;
 import com.example.arczone.universal.SignUpFragment;
 import com.example.arczone.universal.universal_methods;
 
@@ -90,32 +91,28 @@ public class TitleScreenController extends universal_methods {
             String credential = ((EditText) views[6]).getText().toString();
             String pass = ((EditText) views[7]).getText().toString();
 
-            //if credential given is not the email, get the email from db using username
-            if(!credential.contains("@")) credential = db.getUserEmailFromUsername(credential);
-
             //if the credential is not null
-            if (credential != null && pass != null) {
-                //attempt to login using credentials
-                if (auth.loginUser(credential, pass)) {
-                    //if successful, create new ArcZoneUser Object by getting info from db
-                    db.getUserData(credential);
-                    //start game selection screen activity
-                    Intent intent = new Intent(activity, GameSelectionScreen.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    activity.startActivity(intent);
-                }
-                else{
+            if (credential.contains("@") && pass != null) {
+
+                LoadingDialogFragment loadingDialog = new LoadingDialogFragment();
+                auth.loginUser(credential, pass, activity, loadingDialog, db);
+                //if the loading frag is hidden and we are still in this activity...
+                if (!loadingDialog.isVisible()) {
                     // Clear password
                     ((EditText) views[7]).setText("");
-
-                    Toast.makeText(activity, "Incorrect Credentials", Toast.LENGTH_LONG).show();
                 }
             }
             else {
-                // Clear password
-                ((EditText) views[7]).setText("");
+                if(!credential.contains("@")){
+                    ((EditText) views[6]).setText("");
 
-                Toast.makeText(activity, "Login failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Please enter a valid email", Toast.LENGTH_LONG).show();
+                }else {
+                    // Clear password
+                    ((EditText) views[7]).setText("");
+
+                    Toast.makeText(activity, "Login failed", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
