@@ -30,6 +30,7 @@ public class SpInView extends SurfaceView implements Runnable {
     private int Yscreen;
     private PlayersShip Pship;
     private Bullet B;
+
     private Bullet[] invBul = new Bullet[200];
     private int nextBul;
     private int maxInBul = 10;
@@ -45,24 +46,36 @@ public class SpInView extends SurfaceView implements Runnable {
     private int uh = -1;
     private int oh = -1;
     int score = 0;
-    int gamescore = 0;
     private int lives = 3;
+    int gamescore;
+    float difficulty;
     private long menaceInterval = 1000;
+    private int InvBackground;
     private boolean uhOrOh;
+    float vol;
     private long lastMenaceTime = System.currentTimeMillis();
-    private float difficulty;
-    public SpInView(Context context, int X, int Y, float difficulty){
+    public SpInView(Context context, int X, int Y, float difficulty, float volume){
         super(context);
         this.context = context;
+        this.difficulty = difficulty;
+        vol = volume;
         Holder = getHolder();
         paint = new Paint();
         Xscreen = X;
         Yscreen = Y;
-        this.difficulty = difficulty;
         soundP = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         try{
             AssetManager assetManager = context.getAssets();
             AssetFileDescriptor desc;
+            desc = assetManager.openFd("InvBackground.ogg");
+            InvBackground = soundP.load(desc, 0);
+            soundP.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                @Override
+                public void onLoadComplete(SoundPool soundPool, int sampleId,
+                                           int status) {
+                    soundPool.play(InvBackground, vol, vol, 0, -1, 1);
+                }
+            });
             desc = assetManager.openFd("shoot.ogg");
             shoot = soundP.load(desc, 0);
             desc = assetManager.openFd("invaderexplode.ogg");
@@ -117,8 +130,9 @@ public class SpInView extends SurfaceView implements Runnable {
         }
     }
 
-    public void resume(float diff) {
+    public void resume(float diff, float volume) {
         difficulty = diff;
+        vol = volume;
         play = true;
         gThread = new Thread(this);
         gThread.start();
@@ -139,9 +153,9 @@ public class SpInView extends SurfaceView implements Runnable {
             if(!pause){
                 if((strtFrame - lastMenaceTime) > menaceInterval){
                     if(uhOrOh){
-                        soundP.play(uh,1,1,0,0,1);
+                        soundP.play(uh,vol,vol,0,0,1);
                     }else{
-                        soundP.play(oh,1,1,0,0,1);
+                        soundP.play(oh,vol,vol,0,0,1);
                     }
                     lastMenaceTime = System.currentTimeMillis();
                     uhOrOh = !uhOrOh;
@@ -213,7 +227,7 @@ public class SpInView extends SurfaceView implements Runnable {
         if(bump){
             for(int i = 0; i < numInv; i++){
                 inv[i].dropAndReverse(difficulty);
-                if(inv[i].getY() > Yscreen - Yscreen/Pship.getH()){
+                if(inv[i].getY() > Yscreen - (3*Pship.getH())){
                     lost = true;
                 }
             }
@@ -239,7 +253,7 @@ public class SpInView extends SurfaceView implements Runnable {
                 if(inv[i].getVisibility()){
                     if(RectF.intersects(B.getRec(),inv[i].getrec())){
                         inv[i].setInvisible();
-                        soundP.play(invaderExp,1,1,0,0,1);
+                        soundP.play(invaderExp,vol,vol,0,0,1);
                         B.setInactive();
                         score = score + 10;
                         gamescore = gamescore + 10;
@@ -259,7 +273,7 @@ public class SpInView extends SurfaceView implements Runnable {
                         if(RectF.intersects(invBul[i].getRec(), bricks[j].getRec())){
                             invBul[i].setInactive();
                             bricks[j].setInVisible();
-                            soundP.play(damageShelt,1,1,0,0,1);
+                            soundP.play(damageShelt,vol,vol,0,0,1);
                         }
                     }
                 }
@@ -271,7 +285,7 @@ public class SpInView extends SurfaceView implements Runnable {
                     if(RectF.intersects(B.getRec(),bricks[i].getRec())){
                         B.setInactive();
                         bricks[i].setInVisible();
-                        soundP.play(damageShelt,1,1,0,0,1);
+                        soundP.play(damageShelt,vol,vol,0,0,1);
                     }
                 }
             }
@@ -281,7 +295,7 @@ public class SpInView extends SurfaceView implements Runnable {
                 if(RectF.intersects(Pship.getRect(), invBul[i].getRec())){
                     invBul[i].setInactive();
                     lives--;
-                    soundP.play(playerExp,1,1,0,0,1);
+                    soundP.play(playerExp,vol,vol,0,0,1);
                     if(lives==0){
                         //TODO: remove below and change to gameover(getContext(), "space invaders", gamescore)
                         pause = true;
@@ -307,7 +321,7 @@ public class SpInView extends SurfaceView implements Runnable {
                 }
                 if(motionEvent.getY() < Yscreen - Yscreen / 8){
                     if(B.shoot(Pship.getX()+Pship.getLength()/2,Yscreen,B.UP)){
-                        soundP.play(shoot,1,1,0,0,1);
+                        soundP.play(shoot,vol,vol,0,0,1);
                     }
                 }
                 break;

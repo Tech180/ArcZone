@@ -81,7 +81,7 @@ public class Invader {
             Move = LEFT;
         }
         y = y + h;
-        Speed = Speed * 1.10f * difficulty;
+        Speed = Speed * 1.08f * difficulty;
     }
     public boolean Aim(float shipX, float shipL){
         int randNum = -1;

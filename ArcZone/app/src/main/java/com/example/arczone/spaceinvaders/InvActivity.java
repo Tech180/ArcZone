@@ -8,20 +8,23 @@ import android.view.Display;
 public class InvActivity extends Activity {
 
     SpInView SpInView;
-    float difficulty;
+    float volume = 1;
+    float difficulty = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         Display dis = getWindowManager().getDefaultDisplay();
         Point s = new Point();
         dis.getSize(s);
-        SpInView = new SpInView(this, s.x, s.y,difficulty);
+        volume = getVolumeControlStream();
+        SpInView = new SpInView(this, s.x, s.y,difficulty,volume);
         setContentView(SpInView);
     }
 
     protected void onResume(){
         super.onResume();
-        SpInView.resume(difficulty);
+        volume = getVolumeControlStream();
+        SpInView.resume(difficulty, volume);
     }
 
     protected void onPause(){
