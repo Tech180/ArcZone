@@ -37,6 +37,7 @@ public class Snake extends universal_methods implements SettingsInterface {
         settingsOverlay = new SettingsOverlay();
 
         getSupportFragmentManager().beginTransaction().replace(android.R.id.content, settingsOverlay).addToBackStack(null).commit();
+        setDifficulty(0);
     }
 
     @Override
@@ -53,9 +54,15 @@ public class Snake extends universal_methods implements SettingsInterface {
 
     @Override
     public void setDifficulty(int difficulty){
-        if(difficulty == 0) snakeController.FPS = 5;
-        if(difficulty == 1) snakeController.FPS = 10;
-        if(difficulty == 2) snakeController.FPS = 15;
+        if(difficulty == 0) {
+            this.snakeController.FPS = 5;
+        }
+        if(difficulty == 1) {
+            this.snakeController.FPS = 10;
+        }
+        if(difficulty == 2) {
+            this.snakeController.FPS = 15;
+        }
     }
 
     @Override

@@ -39,7 +39,7 @@ public class SpInView extends SurfaceView implements Runnable {
     int numInv = 0;
     private Brick[] bricks = new Brick[400];
     private int numBricks;
-    private SoundPool soundP;
+    SoundPool soundP;
     private int playerExp = -1;
     private int invaderExp = -1;
     private int shoot = -1;

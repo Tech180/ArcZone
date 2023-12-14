@@ -51,13 +51,14 @@ public class SnakeController extends SurfaceView implements Runnable {
     private Paint paint;
     private boolean isPostGameOverTap = false;
 
+    Snake snake;
+
     public SnakeController(Context context, Point size){
         super(context);
 
         this.context = context;
 
-        //default difficulty
-        this.FPS = 10;
+        snake = new Snake();
 
         screenX = size.x;
         screenY = size.y;
