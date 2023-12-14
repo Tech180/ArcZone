@@ -1,5 +1,7 @@
 package com.example.arczone.spaceinvaders;
 
+import static com.example.arczone.universal.universal_methods.gameOver;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
@@ -220,8 +222,9 @@ public class SpInView extends SurfaceView implements Runnable {
             menaceInterval = menaceInterval - 80;
         }
         if(lost){
-            //TODO: remove below and change to gameover(getContext(), "space invaders", gamescore)
             prepareLevel();
+            gameover();
+            //gameOver(getContext(), "space invaders", gamescore, InvActivity.class);
         }
         if(B.getStatus()){
             B.update(fps);
@@ -283,15 +286,19 @@ public class SpInView extends SurfaceView implements Runnable {
                     lives--;
                     soundP.play(playerExp,1,1,0,0,1);
                     if(lives==0){
-                        //TODO: remove below and change to gameover(getContext(), "space invaders", gamescore)
                         pause = true;
                         lives = 3;
                         score = 0;
+                        gameover();
                         prepareLevel();
                     }
                 }
             }
         }
+    }
+
+    void gameover() {
+        gameOver(getContext(), "space invaders", gamescore);
     }
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
