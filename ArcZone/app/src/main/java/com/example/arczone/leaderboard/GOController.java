@@ -1,5 +1,6 @@
 package com.example.arczone.leaderboard;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.arczone.R;
 import com.example.arczone.firebase.ArcZoneDatabase;
 import com.example.arczone.firebase.ArcZoneUser;
+import com.example.arczone.gameselectionscreen.GameSelectionScreen;
 import com.example.arczone.universal.universal_methods;
 
 import java.util.HashMap;
@@ -28,6 +30,7 @@ public class GOController extends universal_methods {
     private TextView finalscore;
     private TextView gameover;
     private Button leaderButton;
+    private Button gameDashboard;
     private int mode = -1;
     public GOController(AppCompatActivity activity, String game, Integer score){
         this.activity = activity;
@@ -45,6 +48,7 @@ public class GOController extends universal_methods {
 
         flashAnimation(gameover);
         flashAnimation(leaderButton);
+        flashAnimation(gameDashboard);
 
         if(game.equals("Pong")) mode = 0;
         else if(game.equals("Snake")) mode = 1;
@@ -77,6 +81,17 @@ public class GOController extends universal_methods {
                 showLeaderboard(game, score);
             }
         });
+
+        gameDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent restart = new Intent(activity, GameSelectionScreen.class);
+                restart.putExtra("game", game);
+                activity.startActivity(restart);
+
+                activity.finish();
+            }
+        });
     }
 
     private void setViews(){
@@ -84,6 +99,7 @@ public class GOController extends universal_methods {
         highscore = activity.findViewById(R.id.high_score);
         finalscore = activity.findViewById(R.id.final_score);
         leaderButton = activity.findViewById(R.id.leaderboardButton);
+        gameDashboard = activity.findViewById(R.id.gameDashboard);
     }
 
     private void showLeaderboard(String game, int newScore){

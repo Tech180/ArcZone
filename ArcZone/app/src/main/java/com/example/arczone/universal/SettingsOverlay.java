@@ -2,8 +2,8 @@ package com.example.arczone.universal;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +18,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import com.example.arczone.R;
+
 import com.example.arczone.pong.PongActivity;
-import com.example.arczone.pong.PongGameView;
 import com.example.arczone.snakegame.Snake;
 import com.example.arczone.spaceinvaders.InvActivity;
-
-import java.util.Objects;
 
 public class SettingsOverlay extends Fragment{
 
@@ -63,9 +61,12 @@ public class SettingsOverlay extends Fragment{
         musicEffectsSlider.setProgress(savedMusic);
         musicEffectsLabel.setText(getString(R.string.music_effects, savedMusic));
 
+        int temp = 0;
+
         difficultyLabel.setText(getString(R.string.difficulty, difficultySlider.getProgress()));
         musicEffectsLabel.setText(getString(R.string.music_effects, musicEffectsSlider.getProgress()));
 
+        AudioManager audioManager = (AudioManager) requireActivity().getSystemService(Context.AUDIO_SERVICE);
 
         difficultySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -120,8 +121,15 @@ public class SettingsOverlay extends Fragment{
                 editor.apply();
 
 
+                int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                int newVolume = (int) ((progress / 100.0) * maxVolume);
+
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI);
+
 
                 musicEffectsLabel.setText(getString(R.string.music_effects, progress));
+
+                //((SettingsInterface) requireActivity()).setMusicEffects(progress);
 
                 System.out.println("labelllll music: " + musicEffectsLabel.getText());
             }
