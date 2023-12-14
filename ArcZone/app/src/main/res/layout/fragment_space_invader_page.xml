@@ -35,7 +35,7 @@
         android:layout_height="0dp"
         android:layout_weight=".25"
         android:layout_marginHorizontal="15dp"
-        android:src="@drawable/snake"
+        android:src="@drawable/spaceinvaders"
         android:layout_marginBottom="15dp"
         />
 

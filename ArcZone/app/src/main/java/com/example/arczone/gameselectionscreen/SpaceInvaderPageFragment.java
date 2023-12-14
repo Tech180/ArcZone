@@ -35,7 +35,7 @@ public class SpaceInvaderPageFragment extends Fragment {
 
         TextView gameDescription = root.findViewById(R.id.si_description);
         gameDescription.setText(
-                "placeholder text"
+                "Destroy all of the invaders before they reach the bottom or you lose all your lives!"
         );
 
         Button play = root.findViewById(R.id.play);
