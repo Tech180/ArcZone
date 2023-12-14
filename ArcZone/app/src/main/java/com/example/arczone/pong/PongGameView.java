@@ -10,15 +10,16 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.util.AttributeSet;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.arczone.R;
 import com.example.arczone.universal.SettingsInterface;
 
 
-public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder.Callback, SettingsInterface {
-
+public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder.Callback {
     private Thread gameThread;
     final Context context;
     private final Handler handler;
@@ -211,35 +212,6 @@ public class PongGameView extends SurfaceView implements Runnable, SurfaceHolder
 
         opponentPaddleWidth = paddleWidth;
         opponentPaddleHeight = paddleHeight;
-
-        setDifficulty(1);
-    }
-
-    @Override
-    public void setDifficulty(int difficulty) {
-        switch(difficulty) {
-            case 1:
-                difficultyChange(10, 10, 1);
-                System.out.println("Changed!!!!!");
-                break;
-            case 2:
-                difficultyChange(12, 12, 2);
-                System.out.println("Changed 2!!!!!");
-                break;
-            case 3:
-                difficultyChange(15, 15, 3);
-                System.out.println("Changed 3!!!!!");
-                break;
-            default:
-                difficultyChange(10, 10, 1);
-                System.out.println("hmmmmm");
-                break;
-        }
-    }
-
-    @Override
-    public void setMusicEffects(int musicEffects) {
-
     }
 
 

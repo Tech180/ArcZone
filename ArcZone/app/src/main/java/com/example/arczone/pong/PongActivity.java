@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import com.example.arczone.R;
 import com.example.arczone.universal.SettingsInterface;
 import com.example.arczone.universal.SettingsOverlay;
 
-public class PongActivity extends AppCompatActivity {
+import java.util.Objects;
+
+public class PongActivity extends AppCompatActivity implements SettingsInterface {
 
     private PongGameView pongGameView;
 
@@ -23,7 +26,6 @@ public class PongActivity extends AppCompatActivity {
     private TextView scoreUser, scoreOpponent;
 
     private SettingsOverlay settingsOverlay;
-    //private TextView gameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +33,17 @@ public class PongActivity extends AppCompatActivity {
 
 
         // Set full screen
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //Objects.requireNonNull(getSupportActionBar()).hide();
 
         setContentView(R.layout.activity_pong);
 
@@ -90,7 +98,6 @@ public class PongActivity extends AppCompatActivity {
         //gameOver.setVisibility(View.VISIBLE);
 
         gameOver(pongGameView.context, "Snake", score, PongActivity.class);
-
     }
 
     @Override
@@ -103,5 +110,32 @@ public class PongActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         pongGameView.pause();
+    }
+
+    @Override
+    public void setDifficulty(int difficulty) {
+        switch(difficulty) {
+            case 1:
+                pongGameView.difficultyChange(10, 10, 1);
+                System.out.println("Changed!!!!!");
+                break;
+            case 2:
+                pongGameView.difficultyChange(12, 12, 2);
+                System.out.println("Changed 2!!!!!");
+                break;
+            case 3:
+                pongGameView.difficultyChange(15, 15, 3);
+                System.out.println("Changed 3!!!!!");
+                break;
+            default:
+                pongGameView.difficultyChange(10, 10, 1);
+                System.out.println("hmmmmm");
+                break;
+        }
+    }
+
+    @Override
+    public void setMusicEffects(int musicEffects) {
+
     }
 }

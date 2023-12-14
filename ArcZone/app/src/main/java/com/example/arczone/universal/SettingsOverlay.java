@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.arczone.R;
 import com.example.arczone.pong.PongActivity;
+import com.example.arczone.pong.PongGameView;
 import com.example.arczone.snakegame.Snake;
 import com.example.arczone.spaceinvaders.InvActivity;
 
@@ -65,6 +66,7 @@ public class SettingsOverlay extends Fragment{
         difficultyLabel.setText(getString(R.string.difficulty, difficultySlider.getProgress()));
         musicEffectsLabel.setText(getString(R.string.music_effects, musicEffectsSlider.getProgress()));
 
+
         difficultySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -75,17 +77,16 @@ public class SettingsOverlay extends Fragment{
                 editor.putInt("difficulty", progress);
                 editor.apply();
 
-
                 switch(progress) {
                     case 0:
                         ((SettingsInterface) requireActivity()).setDifficulty(1);
                         System.out.println("here...");
                         break;
-                    case 50:
+                    case 1:
                         ((SettingsInterface) requireActivity()).setDifficulty(2);
                         System.out.println("here2...");
                         break;
-                    case 100:
+                    case 2:
                         ((SettingsInterface) requireActivity()).setDifficulty(3);
                         System.out.println("here3...");
                         break;
@@ -97,6 +98,7 @@ public class SettingsOverlay extends Fragment{
                 difficultyLabel.setText(getString(R.string.difficulty, progress));
 
                 System.out.println("labelllll: " + difficultyLabel.getText());
+                System.out.println("progress: " + progress);
             }
 
             @Override

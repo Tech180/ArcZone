@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.arczone.R;
+import com.example.arczone.universal.SettingsOverlay;
 import com.example.arczone.universal.universal_methods;
 
 public class gameOver extends universal_methods {
