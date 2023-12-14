@@ -180,7 +180,7 @@ public class SnakeController extends SurfaceView implements Runnable {
         if(death()){
             soundPool.play(death, 1, 1, 0, 0, 1);
 
-            gameOver(context, "Snake", score);
+            gameOver(context, "Snake", score, Snake.class);
         }
     }
 

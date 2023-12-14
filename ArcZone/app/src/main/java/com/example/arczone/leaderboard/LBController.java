@@ -13,7 +13,9 @@ import com.example.arczone.R;
 import com.example.arczone.firebase.ArcZoneDatabase;
 import com.example.arczone.firebase.ArcZoneUser;
 import com.example.arczone.gameselectionscreen.GameSelectionScreen;
+import com.example.arczone.pong.PongActivity;
 import com.example.arczone.snakegame.Snake;
+import com.example.arczone.spaceinvaders.InvActivity;
 import com.example.arczone.universal.universal_methods;
 
 import java.util.Map;
@@ -134,10 +136,14 @@ public class LBController extends universal_methods {
                 activity.startActivity(intent);
             }
             else if(game.equals("Pong")){
-                //TODO once pong gets added in, complete the intent
+                Intent intent = new Intent(activity, PongActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
             }
             else{
-                //TODO once space invaders gets added in, complete the intent
+                Intent intent = new Intent(activity, InvActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
             }
         });
 

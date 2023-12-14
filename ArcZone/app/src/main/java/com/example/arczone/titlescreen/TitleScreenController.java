@@ -1,5 +1,7 @@
 package com.example.arczone.titlescreen;
 
+import static com.google.common.io.Resources.getResource;
+
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.arczone.R;
 import com.example.arczone.firebase.*;
 import com.example.arczone.gameselectionscreen.GameSelectionScreen;
+import com.example.arczone.universal.LoadingDialogFragment;
 import com.example.arczone.universal.SignUpFragment;
 import com.example.arczone.universal.universal_methods;
 
@@ -27,6 +30,7 @@ public class TitleScreenController extends universal_methods {
     private Handler handler = new Handler();
 
     private ArcZoneDatabase db;
+    private ArcZoneAuth auth;
     public TitleScreenController(View[] views, AppCompatActivity activity){
         this.views = views;
         this.activity = activity;
@@ -43,6 +47,8 @@ public class TitleScreenController extends universal_methods {
 
         //initialize the database
         db = new ArcZoneDatabase();
+        auth = new ArcZoneAuth(activity);
+
 
     }
 
@@ -81,30 +87,27 @@ public class TitleScreenController extends universal_methods {
     }
 
     private void login() {
-        views[5].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String credential = ((EditText) views[6]).getText().toString();
-                String pass = ((EditText) views[7]).getText().toString();
+        views[5].setOnClickListener(v -> {
+            String credential = ((EditText) views[6]).getText().toString();
+            String pass = ((EditText) views[7]).getText().toString();
 
+            //if the credential is not null
+            if (credential.contains("@") && pass != null) {
 
-                // Get the user data from the db via the credential
-                ArcZoneUser arcZoneUser = db.getUserData(credential);
-
-                if (arcZoneUser != null) {
-                    // If provided credential is not an email, look up email via username
-                    if (!credential.contains("@")) {
-                        System.out.println("Username: " + credential);
-                        credential = arcZoneUser.getEmail();
-                    }
-
-                    if (ArcZoneAuth.loginUser(credential, pass)) {
-                        Intent intent = new Intent(activity, GameSelectionScreen.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        activity.startActivity(intent);
-                    }
+                LoadingDialogFragment loadingDialog = new LoadingDialogFragment();
+                auth.loginUser(credential, pass, activity, loadingDialog, db);
+                //if the loading frag is hidden and we are still in this activity...
+                if (!loadingDialog.isVisible()) {
+                    // Clear password
+                    ((EditText) views[7]).setText("");
                 }
-                else {
+            }
+            else {
+                if(!credential.contains("@")){
+                    ((EditText) views[6]).setText("");
+
+                    Toast.makeText(activity, "Please enter a valid email", Toast.LENGTH_LONG).show();
+                }else {
                     // Clear password
                     ((EditText) views[7]).setText("");
 

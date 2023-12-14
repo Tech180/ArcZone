@@ -7,21 +7,25 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.arczone.R;
+import com.example.arczone.universal.SettingsInterface;
+import com.example.arczone.universal.SettingsOverlay;
 
-public class PongActivity extends AppCompatActivity {
+import java.util.Objects;
+
+public class PongActivity extends AppCompatActivity implements SettingsInterface {
 
     private PongGameView pongGameView;
 
-    private static Button startButton;
+    private Button startButton;
     private TextView scoreUser, scoreOpponent;
 
-    //private SettingsOverlay settingsOverlay;
-    //private TextView gameOver;
+    private SettingsOverlay settingsOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +33,17 @@ public class PongActivity extends AppCompatActivity {
 
 
         // Set full screen
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
         );
+
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //Objects.requireNonNull(getSupportActionBar()).hide();
 
         setContentView(R.layout.activity_pong);
 
@@ -57,18 +67,19 @@ public class PongActivity extends AppCompatActivity {
                 pongGameView.startGame();
                 startButton.setVisibility(View.GONE);
 
+                setDifficulty(0);
+
             }
         });
         // Create and initialize settings overlay with visibility
-        //settingsOverlay = new SettingsOverlay(true);
+        settingsOverlay = new SettingsOverlay();
+
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, settingsOverlay).addToBackStack(null).commit();
 
 
         // Assign scores
         pongGameView.opponentScore = scoreOpponent;
         pongGameView.userScore = scoreUser;
-
-
-
     }
 
     /**
@@ -88,24 +99,45 @@ public class PongActivity extends AppCompatActivity {
 
         //gameOver.setVisibility(View.VISIBLE);
 
-        // Hide the game over TextView after three seconds
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameOver(pongGameView.context, "Snake", score);
-            }
-        }, 3000); // 3000 milliseconds = 3 seconds
+        gameOver(pongGameView.context, "Snake", score, PongActivity.class);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         pongGameView.resume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         pongGameView.pause();
+    }
+
+    @Override
+    public void setDifficulty(int difficulty) {
+        switch(difficulty) {
+            case 1:
+                pongGameView.difficultyChange(10, 10, 1);
+                System.out.println("Changed!!!!!");
+                break;
+            case 2:
+                pongGameView.difficultyChange(12, 12, 2);
+                System.out.println("Changed 2!!!!!");
+                break;
+            case 3:
+                pongGameView.difficultyChange(15, 15, 3);
+                System.out.println("Changed 3!!!!!");
+                break;
+            default:
+                pongGameView.difficultyChange(10, 10, 1);
+                System.out.println("hmmmmm");
+                break;
+        }
+    }
+
+    @Override
+    public void setMusicEffects(int musicEffects) {
+
     }
 }

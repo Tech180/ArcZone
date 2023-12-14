@@ -7,9 +7,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.arczone.R;
 import com.example.arczone.leaderboard.gameOver;
 
 import java.util.Objects;
@@ -54,13 +56,16 @@ public class universal_methods extends AppCompatActivity{
         view.startAnimation(flashingAnimation);
     }
 
-    public static void gameOver(Context context, String game, Integer score){
+    public static void gameOver(Context context, String game, Integer score, Class<?> gameClass){
         Intent intent = new Intent(context, gameOver.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //pass the game and score
         intent.putExtra("game", game);
         intent.putExtra("score", score);
+        intent.putExtra("gameClass", gameClass.getName());
         //start activity
         context.startActivity(intent);
+
+
     }
 }

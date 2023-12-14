@@ -1,63 +1,125 @@
 package com.example.arczone.universal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.arczone.R;
 
-public class SettingsOverlay extends Fragment {
+import com.example.arczone.pong.PongActivity;
+import com.example.arczone.snakegame.Snake;
+import com.example.arczone.spaceinvaders.InvActivity;
 
-    ImageView Cog;
+/**
+ * Fragment class for displaying and managing game settings overlay.
+ */
+public class SettingsOverlay extends Fragment{
 
+    // UI components
+    private SeekBar difficultySlider;
+    private TextView difficultyLabel;
+    private SeekBar musicEffectsSlider;
+    private TextView musicEffectsLabel;
+    private AppCompatButton closeButton;
+    private ImageView arcadeScreen;
+    private ImageView cog;
+
+    private SharedPreferences sharedPreferences;
+
+
+    /**
+     * Default constructor for the SettingsOverlay fragment.
+     */
     public SettingsOverlay() {}
 
-    public SettingsOverlay(Boolean toggle) {
 
-        if(toggle) {
-            //showCog(true);
-        }
-        else {
-            showCog(false);
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
+    /**
+     * Inflates the layout and initializes UI components.
+     *
+     * @param inflater           LayoutInflater to inflate views.
+     * @param container          ViewGroup container for the fragment.
+     * @param savedInstanceState Bundle containing the saved state.
+     * @return                   View of the inflated layout.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.settings_overlay, container, false);
 
-        SeekBar difficultySlider = view.findViewById(R.id.difficultyBar);
-        SeekBar musicEffectsSlider = view.findViewById(R.id.musicEffects);
-        Button closeButton = view.findViewById(R.id.closeButton);
-        ImageView arcadeScreen = view.findViewById(R.id.arcadeScreen);
-        this.Cog = view.findViewById(R.id.Cog);
+        difficultySlider = view.findViewById(R.id.difficultyBar);
+        difficultyLabel = view.findViewById(R.id.difficultyLabel);
+        musicEffectsSlider = view.findViewById(R.id.musicEffects);
+        musicEffectsLabel = view.findViewById(R.id.musicEffectsLabel);
+        closeButton = view.findViewById(R.id.closeButton);
+        arcadeScreen = view.findViewById(R.id.arcadeScreen);
+        cog = view.findViewById(R.id.Cog);
 
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+
+        int savedDifficulty = sharedPreferences.getInt("difficulty", 0);
+        difficultySlider.setProgress(savedDifficulty);
+        difficultyLabel.setText(getString(R.string.difficulty, savedDifficulty));
+
+        int savedMusic = sharedPreferences.getInt("music_effects", 0);
+        musicEffectsSlider.setProgress(savedMusic);
+        musicEffectsLabel.setText(getString(R.string.music_effects, savedMusic));
+
+        difficultyLabel.setText(getString(R.string.difficulty, difficultySlider.getProgress()));
+        musicEffectsLabel.setText(getString(R.string.music_effects, musicEffectsSlider.getProgress()));
+
+        AudioManager audioManager = (AudioManager) requireActivity().getSystemService(Context.AUDIO_SERVICE);
+
+
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        // Difficulty SeekBar
         difficultySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                TextView difficultyLabel = view.findViewById(R.id.difficultyLabel);
-                //difficultyLabel.setText(0);
+
                 difficultyLabel.setText(getString(R.string.difficulty, progress));
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("difficulty", progress);
+                editor.apply();
+
+                //Updates the game's difficulty based on the progress.
+
+                switch(progress) {
+                    case 0:
+                        ((SettingsInterface) requireActivity()).setDifficulty(1);
+                        System.out.println("here...");
+                        break;
+                    case 1:
+                        ((SettingsInterface) requireActivity()).setDifficulty(2);
+                        System.out.println("here2...");
+                        break;
+                    case 2:
+                        ((SettingsInterface) requireActivity()).setDifficulty(3);
+                        System.out.println("here3...");
+                        break;
+                    default:
+                        break;
+                }
+
+
+                difficultyLabel.setText(getString(R.string.difficulty, progress));
+
+                System.out.println("labelllll: " + difficultyLabel.getText());
+                System.out.println("progress: " + progress);
             }
 
             @Override
@@ -71,8 +133,25 @@ public class SettingsOverlay extends Fragment {
         musicEffectsSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                TextView musicEffectsLabel = view.findViewById(R.id.musicEffectsLabel);
+
                 musicEffectsLabel.setText(getString(R.string.music_effects, progress));
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("music_effects", progress);
+                editor.apply();
+
+                //int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+                int newVolume = (int) ((progress / 100.0) * maxVolume);
+
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI);
+
+
+                musicEffectsLabel.setText(getString(R.string.music_effects, progress));
+
+                ((SettingsInterface) requireActivity()).setMusicEffects(progress);
+
+                System.out.println("labelllll music: " + musicEffectsLabel.getText());
             }
 
             @Override
@@ -82,77 +161,97 @@ public class SettingsOverlay extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        Cog.setOnClickListener(v -> {
-            if (!isAdded()) {
-                showOverlay(arcadeScreen);
-                fadeIn(view, 500);
-            }
+        showCog(cog);
+
+        // Show the overlay and pause the game when the cog is clicked
+        cog.setOnClickListener(v -> {
+            showOverlay();
+            hideCog(cog);
+            fadeElementsIn(250);
+            gamePause();
+
         });
 
+        // Hide the overlay and resume the game when the close button is clicked
         closeButton.setOnClickListener(v -> {
-            fadeOut(view, 500);
+            fadeElementsOut(250);
+            showCog(cog);
             hideOverlay();
+            gameResume();
         });
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        ImageView arcadeScreen = view.findViewById(R.id.arcadeScreen);
-        Cog = view.findViewById(R.id.Cog);
-
-        System.out.println("Cog: " + Cog);
-
-        showCog(true);
-    }
-
-    /*
-    public void initialize() {
-
-        // Create an instance of the fragment
-        SettingsOverlay settingsOverlay = new SettingsOverlay();
-
-        // Get the FragmentManager
-        FragmentManager fragmentManager = getParentFragmentManager();
-
-        // Start a new transaction
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace existing fragment or add it to the fragment container
-        fragmentTransaction.replace(R.id., settingsOverlay);
-        fragmentTransaction.addToBackStack(null); // Optional: add to back stack
-        fragmentTransaction.commit();
-
-    }
+    /**
+     * Shows the cog ImageView.
+     *
+     * @param cog The cog ImageView.
      */
-
-
-    public void showCog(Boolean toggle) {
-        if(toggle) {
-            Cog.setVisibility(View.VISIBLE);
-        }
-        else {
-            Cog.setVisibility(View.INVISIBLE);
-        }
-
-
+    public void showCog(ImageView cog) {
+        cog.setVisibility(View.VISIBLE);
     }
 
-    public void showOverlay(ImageView arcadeScreen) {
-        Log.e("this", "arcadeScreen: " + arcadeScreen);
+    /**
+     * Hides the cog ImageView.
+     *
+     * @param cog The cog ImageView.
+     */
+    public void hideCog(ImageView cog) {
+        cog.setVisibility(View.INVISIBLE);
+    }
 
+    /**
+     * Fades in specified views.
+     *
+     * @param dur Duration of the fade-in animation.
+     */
+    public void fadeElementsIn(int dur) {
+        fadeIn(arcadeScreen, dur);
+        fadeIn(musicEffectsLabel, dur);
+        fadeIn(difficultyLabel, dur);
+        fadeIn(musicEffectsSlider, dur);
+        fadeIn(difficultySlider, dur);
+        fadeIn(closeButton, dur);
+    }
+
+    /**
+     * Fades out specified views.
+     *
+     * @param dur Duration of the fade-out animation.
+     */
+    public void fadeElementsOut(int dur) {
+        fadeOut(arcadeScreen, dur);
+        fadeOut(musicEffectsLabel, dur);
+        fadeOut(difficultyLabel, dur);
+        fadeOut(musicEffectsSlider, dur);
+        fadeOut(difficultySlider, dur);
+        fadeOut(closeButton, dur);
+    }
+
+    /**
+     * Shows the overlay by making specified views visible.
+     */
+    public void showOverlay() {
         arcadeScreen.setVisibility(View.VISIBLE);
-        //difficultySlider.setVisibility(View.VISIBLE);
-        //musicEffectsSlider.setVisibility(View.VISIBLE);
-
+        difficultySlider.setVisibility(View.VISIBLE);
+        musicEffectsSlider.setVisibility(View.VISIBLE);
+        difficultyLabel.setVisibility(View.VISIBLE);
+        musicEffectsLabel.setVisibility(View.VISIBLE);
+        closeButton.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hides the overlay by making specified views invisible.
+     */
     public void hideOverlay() {
-
-        //Cog.setVisibility(View.INVISIBLE);
+        arcadeScreen.setVisibility(View.INVISIBLE);
+        difficultySlider.setVisibility(View.INVISIBLE);
+        musicEffectsSlider.setVisibility(View.INVISIBLE);
+        difficultyLabel.setVisibility(View.INVISIBLE);
+        musicEffectsLabel.setVisibility(View.INVISIBLE);
+        closeButton.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -177,13 +276,43 @@ public class SettingsOverlay extends Fragment {
         view.startAnimation(fadeOut);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+
+    /**
+     * Pauses the game based on the current activity type.
+     */
+    public void gamePause() {
+
+        if (getActivity() instanceof PongActivity) {
+            ((PongActivity) getActivity()).onPause();
+        }
+        if (getActivity() instanceof Snake) {
+            ((Snake) getActivity()).onPause();
+        }
+
+        if (getActivity() instanceof InvActivity) {
+            ((InvActivity) getActivity()).onPause();
+        }
+
+
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    /**
+     * Resumes the game based on the current activity type.
+     */
+    public void gameResume() {
+
+        if (getActivity() instanceof PongActivity) {
+            ((PongActivity) getActivity()).onResume();
+        }
+        if (getActivity() instanceof Snake) {
+            ((Snake) getActivity()).onResume();
+        }
+
+        if (getActivity() instanceof InvActivity) {
+            ((InvActivity) getActivity()).onResume();
+        }
+
     }
+
+
 }
