@@ -23,18 +23,28 @@ public class gameOver extends universal_methods {
 
         new GOController(this, intent.getStringExtra("game"), intent.getIntExtra("score", 0));
 
-        intentPass();
+        String className = intent.getStringExtra("gameClass");
+
+        Class<?> gameClass = null;
+        try {
+            gameClass = Class.forName(className);
+        }
+        catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        intentPass(gameClass);
 
     }
 
-    void intentPass() {
+    void intentPass(Class<?> gameClass ) {
 
         Button playAgainButton = findViewById(R.id.playAgainButton);
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent restart = new Intent(gameOver.this, gameOver.class);
+                Intent restart = new Intent(gameOver.this, gameClass);
                 restart.putExtra("game", intent.getStringExtra("game"));
                 startActivity(restart);
 

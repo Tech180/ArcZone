@@ -92,7 +92,7 @@ public class PongActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                gameOver(pongGameView.context, "Snake", score);
+                gameOver(pongGameView.context, "Snake", score, PongActivity.class);
             }
         }, 3000); // 3000 milliseconds = 3 seconds
     }
