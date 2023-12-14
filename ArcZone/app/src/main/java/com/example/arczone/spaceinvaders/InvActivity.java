@@ -1,11 +1,12 @@
 package com.example.arczone.spaceinvaders;
 
-import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
-public class InvActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class InvActivity extends AppCompatActivity {
 
     SpInView SpInView;
     float difficulty;
@@ -19,12 +20,12 @@ public class InvActivity extends Activity {
         setContentView(SpInView);
     }
 
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
         SpInView.resume(difficulty);
     }
 
-    protected void onPause(){
+    public void onPause(){
         super.onPause();
         SpInView.pause();
     }

@@ -1,26 +1,9 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:padding="6dp">
-
-    <!-- Cog Icon -->
-    <ImageView
-        android:id="@+id/Cog"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/cog"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
 
     <!-- Arcade Screen -->
     <ImageView
@@ -29,71 +12,87 @@
         android:layout_height="298dp"
         android:src="@drawable/arcade_screen"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_centerInParent="true" />
 
-    <!-- Difficulty -->
-    <TextView
-        android:id="@+id/difficultyLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="@string/difficulty"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/arcadeScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Cog"
-        app:layout_constraintVertical_bias="0.0" />
+    <!-- Cog Icon -->
+    <ImageView
+        android:id="@+id/Cog"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/cog"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible" />
 
-    <SeekBar
-        android:id="@+id/difficultyBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="10"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/arcadeScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/difficultyLabel"
-        app:layout_constraintVertical_bias="0.139" />
+    <!-- Other views inside the Arcade Screen -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/musicEffectsLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/music_effects"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/difficultyBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- Difficulty Label -->
+        <TextView
+            android:id="@+id/difficultyLabel"
+            android:fontFamily="@font/arcade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/difficulty"
+            android:visibility="invisible"
+            android:textSize="18sp"/>
 
-    <!-- Music Effects -->
-    <SeekBar
-        android:id="@+id/musicEffects"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/arcadeScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/musicEffectsLabel"
-        app:layout_constraintVertical_bias="0.0" />
+        <!-- Difficulty SeekBar -->
+        <SeekBar
+            android:id="@+id/difficultyBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="2"
+            android:layout_marginTop="4dp"
+        android:visibility="invisible" />
 
-    <!-- Close Button -->
-    <Button
-        android:id="@+id/closeButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Close"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/arcadeScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/musicEffects"
-        app:layout_constraintVertical_bias="0.526" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Add padding between Difficulty and Music Effects elements -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="8dp" />
+
+        <!-- Music Effects Label -->
+        <TextView
+            android:id="@+id/musicEffectsLabel"
+            android:fontFamily="@font/arcade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/music_effects"
+            android:visibility="invisible"
+            android:textSize="18sp"/>
+
+        <!-- Music Effects SeekBar -->
+        <SeekBar
+            android:id="@+id/musicEffects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:layout_marginTop="4dp"
+        android:visibility="invisible" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <!-- Close Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/nintendo"
+            android:gravity="center"
+            android:text="Close"
+            android:textColor="@color/teal_200"
+            android:textSize="14dp"
+            android:visibility="invisible" />
+    </LinearLayout>
+</RelativeLayout>

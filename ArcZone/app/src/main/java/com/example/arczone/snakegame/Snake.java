@@ -4,11 +4,14 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
+import com.example.arczone.universal.SettingsOverlay;
 import com.example.arczone.universal.universal_methods;
 
 public class Snake extends universal_methods {
 
     SnakeController snakeController;
+
+    private SettingsOverlay settingsOverlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +30,20 @@ public class Snake extends universal_methods {
         snakeController = new SnakeController(this, size);
 
         setContentView(snakeController);
+
+        settingsOverlay = new SettingsOverlay();
+
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, settingsOverlay).addToBackStack(null).commit();
     }
 
     @Override
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
         snakeController.resume();
     }
 
     @Override
-    protected void onPause(){
+    public void onPause(){
         super.onPause();
         snakeController.pause();
     }

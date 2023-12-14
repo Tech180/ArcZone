@@ -12,15 +12,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.arczone.R;
+import com.example.arczone.universal.SettingsInterface;
+import com.example.arczone.universal.SettingsOverlay;
 
 public class PongActivity extends AppCompatActivity {
 
     private PongGameView pongGameView;
 
-    private static Button startButton;
+    private Button startButton;
     private TextView scoreUser, scoreOpponent;
 
-    //private SettingsOverlay settingsOverlay;
+    private SettingsOverlay settingsOverlay;
     //private TextView gameOver;
 
     @Override
@@ -60,15 +62,14 @@ public class PongActivity extends AppCompatActivity {
             }
         });
         // Create and initialize settings overlay with visibility
-        //settingsOverlay = new SettingsOverlay(true);
+        settingsOverlay = new SettingsOverlay();
+
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, settingsOverlay).addToBackStack(null).commit();
 
 
         // Assign scores
         pongGameView.opponentScore = scoreOpponent;
         pongGameView.userScore = scoreUser;
-
-
-
     }
 
     /**
@@ -88,23 +89,18 @@ public class PongActivity extends AppCompatActivity {
 
         //gameOver.setVisibility(View.VISIBLE);
 
-        // Hide the game over TextView after three seconds
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                gameOver(pongGameView.context, "Snake", score, PongActivity.class);
-            }
-        }, 3000); // 3000 milliseconds = 3 seconds
+        gameOver(pongGameView.context, "Snake", score, PongActivity.class);
+
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         pongGameView.resume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         pongGameView.pause();
     }

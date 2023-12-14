@@ -1,27 +1,16 @@
 package com.example.arczone.universal;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.view.*;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.arczone.firebase.*;
 
 import com.example.arczone.R;
-import com.google.common.eventbus.AllowConcurrentEvents;
 
 public class SignUpFragment extends DialogFragment {
 
