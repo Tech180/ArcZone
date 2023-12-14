@@ -67,6 +67,8 @@ public class PongActivity extends AppCompatActivity implements SettingsInterface
                 pongGameView.startGame();
                 startButton.setVisibility(View.GONE);
 
+                setDifficulty(0);
+
             }
         });
         // Create and initialize settings overlay with visibility

@@ -23,8 +23,12 @@ import com.example.arczone.pong.PongActivity;
 import com.example.arczone.snakegame.Snake;
 import com.example.arczone.spaceinvaders.InvActivity;
 
+/**
+ * Fragment class for displaying and managing game settings overlay.
+ */
 public class SettingsOverlay extends Fragment{
 
+    // UI components
     private SeekBar difficultySlider;
     private TextView difficultyLabel;
     private SeekBar musicEffectsSlider;
@@ -32,12 +36,24 @@ public class SettingsOverlay extends Fragment{
     private AppCompatButton closeButton;
     private ImageView arcadeScreen;
     private ImageView cog;
+
     private SharedPreferences sharedPreferences;
 
 
+    /**
+     * Default constructor for the SettingsOverlay fragment.
+     */
     public SettingsOverlay() {}
 
 
+    /**
+     * Inflates the layout and initializes UI components.
+     *
+     * @param inflater           LayoutInflater to inflate views.
+     * @param container          ViewGroup container for the fragment.
+     * @param savedInstanceState Bundle containing the saved state.
+     * @return                   View of the inflated layout.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +77,15 @@ public class SettingsOverlay extends Fragment{
         musicEffectsSlider.setProgress(savedMusic);
         musicEffectsLabel.setText(getString(R.string.music_effects, savedMusic));
 
-        int temp = 0;
-
         difficultyLabel.setText(getString(R.string.difficulty, difficultySlider.getProgress()));
         musicEffectsLabel.setText(getString(R.string.music_effects, musicEffectsSlider.getProgress()));
 
         AudioManager audioManager = (AudioManager) requireActivity().getSystemService(Context.AUDIO_SERVICE);
 
+
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+
+        // Difficulty SeekBar
         difficultySlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -77,6 +95,8 @@ public class SettingsOverlay extends Fragment{
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("difficulty", progress);
                 editor.apply();
+
+                //Updates the game's difficulty based on the progress.
 
                 switch(progress) {
                     case 0:
@@ -120,8 +140,8 @@ public class SettingsOverlay extends Fragment{
                 editor.putInt("music_effects", progress);
                 editor.apply();
 
+                //int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
-                int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                 int newVolume = (int) ((progress / 100.0) * maxVolume);
 
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI);
@@ -129,7 +149,7 @@ public class SettingsOverlay extends Fragment{
 
                 musicEffectsLabel.setText(getString(R.string.music_effects, progress));
 
-                //((SettingsInterface) requireActivity()).setMusicEffects(progress);
+                ((SettingsInterface) requireActivity()).setMusicEffects(progress);
 
                 System.out.println("labelllll music: " + musicEffectsLabel.getText());
             }
@@ -143,6 +163,7 @@ public class SettingsOverlay extends Fragment{
 
         showCog(cog);
 
+        // Show the overlay and pause the game when the cog is clicked
         cog.setOnClickListener(v -> {
             showOverlay();
             hideCog(cog);
@@ -151,6 +172,7 @@ public class SettingsOverlay extends Fragment{
 
         });
 
+        // Hide the overlay and resume the game when the close button is clicked
         closeButton.setOnClickListener(v -> {
             fadeElementsOut(250);
             showCog(cog);
@@ -162,14 +184,29 @@ public class SettingsOverlay extends Fragment{
     }
 
 
+    /**
+     * Shows the cog ImageView.
+     *
+     * @param cog The cog ImageView.
+     */
     public void showCog(ImageView cog) {
-            cog.setVisibility(View.VISIBLE);
+        cog.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hides the cog ImageView.
+     *
+     * @param cog The cog ImageView.
+     */
     public void hideCog(ImageView cog) {
         cog.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Fades in specified views.
+     *
+     * @param dur Duration of the fade-in animation.
+     */
     public void fadeElementsIn(int dur) {
         fadeIn(arcadeScreen, dur);
         fadeIn(musicEffectsLabel, dur);
@@ -179,6 +216,11 @@ public class SettingsOverlay extends Fragment{
         fadeIn(closeButton, dur);
     }
 
+    /**
+     * Fades out specified views.
+     *
+     * @param dur Duration of the fade-out animation.
+     */
     public void fadeElementsOut(int dur) {
         fadeOut(arcadeScreen, dur);
         fadeOut(musicEffectsLabel, dur);
@@ -188,6 +230,9 @@ public class SettingsOverlay extends Fragment{
         fadeOut(closeButton, dur);
     }
 
+    /**
+     * Shows the overlay by making specified views visible.
+     */
     public void showOverlay() {
         arcadeScreen.setVisibility(View.VISIBLE);
         difficultySlider.setVisibility(View.VISIBLE);
@@ -197,6 +242,9 @@ public class SettingsOverlay extends Fragment{
         closeButton.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hides the overlay by making specified views invisible.
+     */
     public void hideOverlay() {
         arcadeScreen.setVisibility(View.INVISIBLE);
         difficultySlider.setVisibility(View.INVISIBLE);
@@ -229,6 +277,9 @@ public class SettingsOverlay extends Fragment{
     }
 
 
+    /**
+     * Pauses the game based on the current activity type.
+     */
     public void gamePause() {
 
         if (getActivity() instanceof PongActivity) {
@@ -245,6 +296,9 @@ public class SettingsOverlay extends Fragment{
 
     }
 
+    /**
+     * Resumes the game based on the current activity type.
+     */
     public void gameResume() {
 
         if (getActivity() instanceof PongActivity) {
