@@ -37,6 +37,8 @@ public class Invader {
         bit1 = Bitmap.createScaledBitmap(bit1,(int)(l),(int)(h),false);
         bit2 = Bitmap.createScaledBitmap(bit2,(int)(l),(int)(h),false);
         Speed = 40;
+
+
     }
     public void setInvisible(){
         Visible = false;

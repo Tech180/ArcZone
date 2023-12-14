@@ -115,12 +115,18 @@ public class ArcZoneDatabase {
         newUser.put("email", email);
         newUser.put("password", password);
 
-        Map<String, Integer> scoreMap = new HashMap<>();
-        scoreMap.put("Pong", 0);
-        scoreMap.put("Snake", 0);
-        scoreMap.put("Space Invaders", 0);
+        ArrayList<Map<String, Integer>> arr = new ArrayList<>();
+        Map<String, Integer> pongMap = new HashMap<>();
+        pongMap.put("Pong", 0);
+        arr.add(0, pongMap);
+        Map<String, Integer> snakeMap = new HashMap<>();
+        snakeMap.put("Snake", 0);
+        arr.add(1, snakeMap);
+        Map<String, Integer> spaceMap = new HashMap<>();
+        spaceMap.put("Space Invaders", 0);
+        arr.add(2, spaceMap);
 
-        newUser.put("scores", scoreMap);
+        newUser.put("scores", arr);
 
         users.add(newUser)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
