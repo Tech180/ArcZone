@@ -146,10 +146,9 @@ public class SettingsOverlay extends Fragment{
 
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_SHOW_UI);
 
-
                 musicEffectsLabel.setText(getString(R.string.music_effects, progress));
 
-                ((SettingsInterface) requireActivity()).setMusicEffects(progress);
+                //((SettingsInterface) requireActivity()).setMusicEffects(progress);
 
                 System.out.println("labelllll music: " + musicEffectsLabel.getText());
             }

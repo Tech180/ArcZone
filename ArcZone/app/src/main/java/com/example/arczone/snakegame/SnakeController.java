@@ -14,15 +14,19 @@ import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.example.arczone.R;
+import com.example.arczone.universal.SettingsInterface;
+
 import java.io.IOException;
 import java.util.Random;
 
 public class SnakeController extends SurfaceView implements Runnable {
     private Thread thread = null;
     private Context context;
-    private SoundPool soundPool;
-    private int eat_apple = -1;
-    private int death = -1;
+    SoundPool soundPool;
+    int eat_apple = -1;
+    int death = -1;
 
     public enum Heading{UP, RIGHT, DOWN, LEFT}
     private Heading heading = Heading.RIGHT;
@@ -36,7 +40,7 @@ public class SnakeController extends SurfaceView implements Runnable {
     private int numBlocksHigh;
 
     private long nextFrameTime;
-    private final long FPS = 10;
+    long FPS;
     private final long MILLIS_PER_SEC = 1000;
 
     private int score;
@@ -52,25 +56,18 @@ public class SnakeController extends SurfaceView implements Runnable {
 
         this.context = context;
 
+        //default difficulty
+        this.FPS = 10;
+
         screenX = size.x;
         screenY = size.y;
 
         blockSize = screenX / NUM_BLOCKS_WIDE;
         numBlocksHigh = screenY / blockSize;
 
-        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-        try{
-            AssetManager assetManager = context.getAssets();
-            AssetFileDescriptor descriptor;
-
-            descriptor = assetManager.openFd("success.mp3");
-            eat_apple = soundPool.load(descriptor, 0);
-
-            descriptor = assetManager.openFd("death.mp3");
-            death = soundPool.load(descriptor, 0);
-        } catch (IOException e) {
-            // error
-        }
+        soundPool = new SoundPool.Builder().build();
+        eat_apple = soundPool.load(context, R.raw.success, 1);
+        death = soundPool.load(context, R.raw.death, 1);
 
         surfaceHolder = getHolder();
         paint = new Paint();
@@ -134,25 +131,25 @@ public class SnakeController extends SurfaceView implements Runnable {
     }
 
     public void moveSnake(){
-         for(int i = snakeLength; i > 0; i--){
-             snakeXs[i] = snakeXs[i - 1];
-             snakeYs[i] = snakeYs[i - 1];
-         }
+        for(int i = snakeLength; i > 0; i--){
+            snakeXs[i] = snakeXs[i - 1];
+            snakeYs[i] = snakeYs[i - 1];
+        }
 
-         switch (heading){
-             case UP:
-                 snakeYs[0]--;
-                 break;
-             case RIGHT:
-                 snakeXs[0]++;
-                 break;
-             case DOWN:
-                 snakeYs[0]++;
-                 break;
-             case LEFT:
-                 snakeXs[0]--;
-                 break;
-         }
+        switch (heading){
+            case UP:
+                snakeYs[0]--;
+                break;
+            case RIGHT:
+                snakeXs[0]++;
+                break;
+            case DOWN:
+                snakeYs[0]++;
+                break;
+            case LEFT:
+                snakeXs[0]--;
+                break;
+        }
     }
 
     public boolean death(){

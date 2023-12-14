@@ -4,14 +4,17 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
+import com.example.arczone.universal.SettingsInterface;
 import com.example.arczone.universal.SettingsOverlay;
 import com.example.arczone.universal.universal_methods;
 
-public class Snake extends universal_methods {
+public class Snake extends universal_methods implements SettingsInterface {
 
     SnakeController snakeController;
 
     private SettingsOverlay settingsOverlay;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +49,18 @@ public class Snake extends universal_methods {
     public void onPause(){
         super.onPause();
         snakeController.pause();
+    }
+
+    @Override
+    public void setDifficulty(int difficulty){
+        if(difficulty == 0) snakeController.FPS = 5;
+        if(difficulty == 1) snakeController.FPS = 10;
+        if(difficulty == 2) snakeController.FPS = 15;
+    }
+
+    @Override
+    public void setMusicEffects(int musicEffects) {
+        snakeController.soundPool.setVolume(snakeController.death, musicEffects, musicEffects);
+        snakeController.soundPool.setVolume(snakeController.eat_apple, musicEffects, musicEffects);
     }
 }
