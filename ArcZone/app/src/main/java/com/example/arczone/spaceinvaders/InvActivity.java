@@ -4,20 +4,31 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.arczone.universal.SettingsOverlay;
+import com.example.arczone.universal.universal_methods;
 
-public class InvActivity extends AppCompatActivity {
+public class InvActivity extends universal_methods {
 
     SpInView SpInView;
     float difficulty;
+
+    private SettingsOverlay settingsOverlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        removeTitleBar(this);
+
         Display dis = getWindowManager().getDefaultDisplay();
         Point s = new Point();
         dis.getSize(s);
         SpInView = new SpInView(this, s.x, s.y,difficulty);
         setContentView(SpInView);
+
+        settingsOverlay = new SettingsOverlay();
+
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, settingsOverlay).addToBackStack(null).commit();
     }
 
     public void onResume(){
